@@ -3,7 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f1f2f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0e13" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Eurotrip">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0}[hidden]{display:none!important}
+.inst{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 12px 12px 16px;margin-top:4px}
+.inst div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.inst b{font:600 15px var(--disp)}.inst span{font-size:13px;color:var(--mute)}
+.inst .x{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:none;color:var(--mute);font-size:22px;cursor:pointer}
+.inst .btn{min-height:40px;padding:0 16px}</style>
 <title>EUROTRIP / 2026</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -439,5 +452,22 @@ rc();
 tab(['roteiro','voos','estadias','checklist'].includes(location.hash.slice(1))?location.hash.slice(1):'roteiro');
 </script>
 
+<script>
+(function(){
+if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+if(matchMedia('(display-mode: standalone)').matches||navigator.standalone)return;
+try{if(localStorage.getItem('eurotrip-inst')==='1')return}catch(e){}
+var ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),ev=null,bar=document.createElement('div');
+bar.className='inst';bar.hidden=true;
+function render(){
+bar.innerHTML=ev?'<div><b>Instalar o app</b><span>Abra pela tela inicial, mesmo sem internet.</span></div><button class="btn pri" id="ib">Instalar</button><button class="x" id="ix" aria-label="Fechar">×</button>':'<div><b>Instalar o app</b><span>Toque em Compartilhar e depois em Adicionar à Tela de Início.</span></div><button class="x" id="ix" aria-label="Fechar">×</button>';
+document.querySelector('main').prepend(bar);bar.hidden=false;
+document.getElementById('ix').onclick=function(){bar.hidden=true;try{localStorage.setItem('eurotrip-inst','1')}catch(e){}};
+var b=document.getElementById('ib');if(b)b.onclick=function(){ev.prompt();ev.userChoice.then(function(){bar.hidden=true;ev=null})}}
+addEventListener('beforeinstallprompt',function(e){e.preventDefault();ev=e;render()});
+addEventListener('appinstalled',function(){bar.hidden=true});
+if(ios)render();
+})();
+</script>
 </body>
 </html>
