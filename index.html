@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<title>EUROTRIP / 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400..600&family=Geist+Mono:wght@400..500&display=swap" rel="stylesheet">
+<style>
+/* App de viagem pensado para celular: uma coluna, abas na base, mapa plano com pino vermelho onde estamos. */
+:root{
+  --bg:#f1f2f4;--surface:#ffffff;--line:#dcdfe5;--ink:#0d1117;--mute:#646d7c;--acc:#2447f5;--acc-ink:#ffffff;
+  --hero:#2447f5;--hero-ink:#ffffff;--hero-mute:rgba(255,255,255,.74);
+  --land:#e4e8ee;--mapbg:#f7f8fa;--pin:#e5322d;
+  --disp:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;--body:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b0e13;--surface:#131822;--line:#252c39;--ink:#eef1f6;--mute:#8b95a5;--acc:#7f99ff;--acc-ink:#0b0e13;
+  --hero:#1f2f9c;--land:#1d2533;--mapbg:#0e121a;--pin:#ff5b52;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b0e13;--surface:#131822;--line:#252c39;--ink:#eef1f6;--mute:#8b95a5;--acc:#7f99ff;--acc-ink:#0b0e13;
+  --hero:#1f2f9c;--land:#1d2533;--mapbg:#0e121a;--pin:#ff5b52;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);overflow-x:clip;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+a{color:inherit;text-decoration:none}h1,h2,h3,p,dl,dd,ul{margin:0;padding:0}ul{list-style:none}button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.w{max-width:680px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.fl{display:inline-flex;gap:3px;align-items:center;vertical-align:middle}.fl svg{display:block;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}.fl i{font-style:normal;color:var(--mute);font-size:.8em}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.bar{height:54px;display:flex;align-items:center;justify-content:space-between}
+.logo{font:600 18px var(--disp);letter-spacing:-.02em}.logo i{font-style:normal;color:var(--mute);font-weight:400}
+.ic{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer}
+.ic svg{width:16px;height:16px}
+.view[hidden]{display:none}.view{display:flex;flex-direction:column;gap:22px;padding-block:6px 20px}
+h2{font:600 28px/1.05 var(--disp);letter-spacing:-.03em}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+
+.sh{align-items:flex-end}
+.cover{display:flex;flex-direction:column;gap:14px;padding-top:4px}
+.cl{display:flex;justify-content:space-between;align-items:center;gap:10px}.cl .fl{gap:4px}.cl .fl svg{width:15px;height:auto}
+h1.cv{font-size:clamp(38px,11.5vw,56px);margin:0;line-height:.95}h1.cv span{color:var(--mute);font-weight:400}
+.nxt{align-items:stretch}.nxt .cr{color:var(--ink)}
+
+h1{font:600 38px/1 var(--disp);letter-spacing:-.04em;margin-top:6px}
+.sub{display:block}
+/* seletor, dias */
+.selw{position:relative}
+.selw select{appearance:none;-webkit-appearance:none;background:var(--surface);border:1px solid var(--line);border-radius:30px;min-height:42px;padding:0 38px 0 16px;font-size:14px;font-weight:500;cursor:pointer;max-width:100%}
+.selw::after{content:"";position:absolute;right:16px;top:50%;width:7px;height:7px;border:solid var(--mute);border-width:0 1.5px 1.5px 0;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.sc{position:relative;display:flex;gap:16px;overflow-x:auto;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:6px max(16px,env(safe-area-inset-left,0px)) 10px;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain}
+.sc::-webkit-scrollbar{display:none}
+.g{display:flex;flex-direction:column;gap:8px;flex:none}
+.gl{display:flex;align-items:center;gap:7px;font:500 10px/1 var(--mono);letter-spacing:.1em;color:var(--mute);height:16px;white-space:nowrap}
+.gl .fl svg{width:20px;height:auto}
+.cells{display:flex;gap:6px}
+.dy{flex:none;width:50px;height:72px;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:9px 0 8px;border:1px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.dy small{font:500 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.dy b{font:600 23px/1 var(--disp);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dy .bt{height:14px;display:flex;align-items:center;justify-content:center}
+.dy .dt{width:4px;height:4px;border-radius:50%;background:var(--line)}.dy.ev .dt{background:var(--mute)}
+.dy.past{opacity:.55}
+.dy.today{border-color:var(--pin);box-shadow:0 0 0 1px var(--pin)}
+.dy.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink);transform:translateY(-3px);opacity:1}.dy.on small{color:var(--acc-ink);opacity:.75}
+.dy .fl svg{width:16px;height:auto}
+
+/* mapa */
+.mapw{display:flex;flex-direction:column;gap:10px}
+.map{position:relative;height:min(118vw,440px);border-radius:24px;background:var(--mapbg);border:1px solid var(--line);overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.zm{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:6px}
+.zm button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:20px;line-height:1;cursor:pointer}
+.mcap{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:center;gap:12px;background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid var(--line);border-radius:16px;padding:10px 14px}
+.mcap svg{width:22px;height:30px;flex:none}
+.mcap div{min-width:0;display:flex;flex-direction:column;gap:2px}.mcap b{font:600 17px/1.2 var(--disp);letter-spacing:-.01em}
+.lgd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.lgd span{display:inline-flex;align-items:center;gap:7px}
+.lgd i{width:9px;height:9px;border-radius:50%;background:var(--pin)}.lgd i.n{background:var(--ink)}
+
+/* cartão do dia */
+.dc{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:14px;overflow-wrap:anywhere;touch-action:pan-y}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.top .fl svg{width:34px;height:auto}
+.tag{color:var(--acc)}
+.dc h2{font-size:clamp(34px,10vw,46px);line-height:1}
+.dc p{font-size:17px;line-height:1.6;color:color-mix(in srgb,var(--ink) 74%,var(--bg));text-wrap:pretty}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.tile{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.tile b{font-weight:500;font-size:16px}
+.acc{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;min-height:56px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary div{display:flex;flex-direction:column;gap:2px;min-width:0}.acc summary b{font-weight:500;font-size:16px}
+.acc summary::after{content:"";flex:none;width:8px;height:8px;border:solid var(--mute);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);transition:transform .2s;margin-right:4px}
+.acc[open] summary::after{transform:rotate(-135deg)}
+.acc .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;color:var(--mute)}
+.lk{display:flex;flex-wrap:wrap;gap:8px}
+.lk a,.lk button,.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 18px;border:1px solid var(--line);border-radius:30px;font-size:14px;font-weight:500;background:transparent;cursor:pointer;gap:6px}
+.lk>*{flex:1 1 auto}
+.btn:disabled{opacity:.3;pointer-events:none}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.act{display:grid;grid-template-columns:1fr 1fr;gap:8px}.act .w2{grid-column:1/-1}
+
+/* voos */
+.passes{display:flex;flex-direction:column;gap:10px}
+.pass{display:flex;flex-direction:column;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;cursor:pointer;width:100%}
+.pass:active{transform:scale(.99)}
+.pass .hd{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pr{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.pt{display:flex;flex-direction:column;gap:6px;min-width:0}.pt.r{align-items:flex-end;text-align:right}
+.pt .fl svg{width:24px;height:auto}
+.pt b{font:600 20px/1.1 var(--disp);letter-spacing:-.02em}
+.pt .mono{font-size:10px}
+.pr .ar{width:32px;height:10px;color:var(--mute)}
+.tm{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.tm div{display:flex;flex-direction:column;gap:2px}.tm b{font:500 15px var(--mono);font-variant-numeric:tabular-nums}.tm em{font-style:normal;color:var(--acc);font-size:11px}
+.cr{font-size:13px;color:var(--mute)}
+.pass.now{background:color-mix(in srgb,var(--acc) 9%,var(--surface));border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
+.tagn{color:var(--acc)}
+.pass.done{flex-direction:row;align-items:center;justify-content:space-between;gap:10px;padding:11px 16px;border-radius:14px;background:transparent;opacity:.62}
+.pass.done .nm{display:flex;align-items:center;gap:10px;font-size:14px;min-width:0}.pass.done .nm b{font-weight:500}
+.pass.done .fl svg{width:16px}
+
+/* estadias */
+.stays{display:flex;flex-direction:column;gap:10px}
+.stays .acc{background:var(--surface);border-radius:20px}
+.stays summary{padding:18px;gap:14px}
+.stays summary h3{font:600 24px/1.1 var(--disp);letter-spacing:-.025em}
+.stays .in{padding:0 18px 18px}.stays .in p{color:var(--ink);line-height:1.65}
+
+/* checklist */
+.pg{display:flex;align-items:center;gap:14px}.pg[hidden]{display:none}
+.pg .tr{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}.pg i{display:block;height:100%;width:0;background:var(--acc);transition:width .35s}
+.addt,.addi{display:flex;gap:8px}
+.addt input,.addi input{flex:1;min-width:0;min-height:46px;padding:0 18px;border:1px solid var(--line);border-radius:30px;background:var(--surface);font:inherit;font-size:16px;color:var(--ink)}
+.addt input::placeholder,.addi input::placeholder{color:var(--mute)}
+.tops{display:flex;flex-direction:column;gap:12px}
+.tp{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.tp>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:14px 18px;min-height:60px;cursor:pointer}
+.tp>summary::-webkit-details-marker{display:none}
+.tp>summary h3{font:600 20px/1.2 var(--disp);letter-spacing:-.02em;flex:1;min-width:0;overflow-wrap:anywhere}
+.tp>summary::after{content:"";flex:none;width:8px;height:8px;border:solid var(--mute);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);transition:transform .2s;margin-right:4px}
+.tp[open]>summary::after{transform:rotate(-135deg)}
+.tp .body{padding:0 18px 14px;display:flex;flex-direction:column}
+.it{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line)}
+.it label{flex:1;display:flex;gap:14px;align-items:center;min-height:52px;cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.it .x{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:none;color:var(--mute);font-size:22px;line-height:1;cursor:pointer}
+.it input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;margin:0;border-radius:50%;border:1.5px solid var(--mute);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.it input:checked{background:var(--acc);border-color:var(--acc)}
+.it input:checked::after{content:"";width:10px;height:5px;border:2px solid var(--acc-ink);border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.it:has(input:checked) span{color:var(--mute);text-decoration:line-through}
+.addi{padding-top:12px;border-top:1px solid var(--line)}
+.addi .btn{min-width:46px;padding:0}
+.del{align-self:flex-start;margin-top:10px;border:0;background:none;padding:6px 0;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);cursor:pointer}
+.del.arm{color:var(--pin)}
+.empty{text-align:center;color:var(--mute);padding:34px 20px;border:1px dashed var(--line);border-radius:20px;line-height:1.6}
+
+.tb{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tb .w{display:flex;gap:2px;padding-block:6px}
+.tb button{flex:1;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:14px;background:transparent;font:500 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);cursor:pointer}
+.tb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tb button.on{color:var(--acc);background:color-mix(in srgb,var(--acc) 11%,transparent)}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header><div class="w bar">
+  <span class="logo">EUROTRIP <i>/ 26</i></span>
+  <button class="ic" id="th" aria-label="Alternar tema claro e escuro"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></svg></button>
+</div></header>
+
+<main class="w">
+<section class="view" id="v-roteiro" data-v="roteiro">
+  <div class="cover">
+    <div class="cl"><span class="mono" id="cvs"></span><span class="fl" id="cvf"></span></div>
+    <h1 class="cv">Eurotrip <span>2026</span></h1>
+    <div id="nxt"></div>
+  </div>
+  <div class="sh"><h2>Roteiro</h2><label class="selw"><select id="go" aria-label="Ir para uma parada"></select></label></div>
+  <div class="sc" id="sc" role="group" aria-label="Dias da viagem"></div>
+  <div class="mapw">
+    <div class="map" id="map" role="img" aria-label="Mapa da viagem com pino vermelho onde estaremos no dia escolhido"><canvas></canvas>
+      <div class="zm"><button id="zi" aria-label="Aproximar">+</button><button id="zo" aria-label="Afastar">−</button></div>
+      <div class="mcap"><svg viewBox="0 0 22 30" aria-hidden="true"><path d="M11 29C11 29 2 18.5 2 11a9 9 0 0 1 18 0c0 7.500-9 18-9 18z" fill="var(--pin)"/><circle cx="11" cy="11" r="3.600" fill="var(--bg)"/></svg><div><span class="mono" id="mcl"></span><b id="mct"></b></div></div>
+    </div>
+    <div class="lgd mono"><span><i></i>Onde estamos / em deslocamento</span><span><i class="n"></i>Outras paradas</span></div>
+  </div>
+  <article class="dc" id="dc" aria-live="polite"></article>
+</section>
+
+<section class="view" id="v-voos" data-v="voos" hidden>
+  <div class="sh"><div><span class="mono sub"></span><h1>Voos</h1></div></div>
+  <div class="passes" id="passes"></div>
+</section>
+
+<section class="view" id="v-estadias" data-v="estadias" hidden>
+  <div class="sh"><div><span class="mono sub"></span><h1>Estadias</h1></div></div>
+  <div class="stays" id="stays"></div>
+</section>
+
+<section class="view" id="v-checklist" data-v="checklist" hidden>
+  <div class="sh"><div><span class="mono sub"></span><h1>Checklist</h1></div><span class="mono" id="pgn"></span></div>
+  <div class="pg" hidden><div class="tr"><i id="pg"></i></div></div>
+  <form class="addt" id="addt"><input id="nt" placeholder="Novo tópico, ex.: Documentos" autocomplete="off" maxlength="40" aria-label="Nome do novo tópico"><button class="btn pri" type="submit">Criar</button></form>
+  <div class="tops" id="tops"></div>
+</section>
+</main>
+
+<nav class="tb" aria-label="Seções"><div class="w">
+  <button data-t="roteiro"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11a7 7 0 1 0-14 0c0 4.800 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></svg>Roteiro</button>
+  <button data-t="voos"><svg viewBox="0 0 24 24"><path d="M21 3L3 11l7 2 2 8z"/><path d="M10 13l11-10"/></svg>Voos</button>
+  <button data-t="estadias"><svg viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10z"/><path d="M10 20v-6h4v6"/></svg>Estadias</button>
+  <button data-t="checklist"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Checklist</button>
+</div></nav>
+
+<script>
+const $=s=>document.querySelector(s),RD=Math.PI/180,TAU=Math.PI*2,cl=(v,a,b)=>Math.max(a,Math.min(b,v)),RM=matchMedia('(prefers-reduced-motion:reduce)').matches,root=document.documentElement;
+try{const t=localStorage.getItem('eurotrip-theme');if(t==='dark'||t==='light')root.dataset.theme=t}catch(e){}
+const LAND=[
+"-168,66 -162,71 -156,71.5 -141,69.5 -128,70 -115,68.5 -105,68 -95,71 -85,69.5 -82,67 -86,64 -94,61 -94,58.5 -88,56.5 -82,55 -82,52.5 -79,51.5 -79,55 -77,59 -78,62 -72,62.5 -68,59 -64,60.3 -61,56 -57,53 -56,51.5 -60,50 -66,50 -64,48.5 -66,45 -70,43.5 -70,41.8 -74,40.5 -76,37 -76,35 -81,31 -80,27 -80,25.2 -82,26.5 -83,29.5 -85,30 -89,30.2 -94,29.5 -97,27 -97.5,22 -96,19 -94,18.2 -91,18.8 -90.5,21 -87,21.5 -87.5,18 -88,16 -84,15.8 -83.5,12 -83.5,10.5 -81,9 -79.5,9.5 -77.5,8.5 -78,7 -80,7.5 -82.8,8.3 -85.7,10 -87.5,13 -91.5,14 -94.5,16 -97,15.8 -101,17.5 -105,20 -105.5,22.5 -109,26 -112.5,29.5 -115,30 -117,32.5 -120.5,34.5 -123.5,38 -124.4,40.5 -124,46 -124.7,48.4 -127,50.5 -130,54 -134,57.5 -137,58.5 -141,60 -147,60.7 -152,59.5 -155,58 -158,56.5 -162,55 -165,54.5 -160,58.5 -162,60 -165,62 -166,64 -162,64.5",
+"-77.5,8.5 -72,12 -63,10.5 -60,8.5 -57,6 -52,5 -50,0 -44,-2.5 -39,-3 -35,-5.5 -35,-9 -38,-13 -39,-18 -41,-22 -45,-23.5 -48,-26 -49,-29 -52,-33 -55,-35 -57,-36.5 -57,-38 -62,-39 -65,-41 -64,-43 -66,-46 -68,-50 -69,-52.5 -68,-54.5 -72,-53.5 -75,-50 -74,-45 -73,-40 -72,-33 -71.5,-28 -70,-18 -76,-14 -81,-6 -80,-2 -80.5,0 -78.5,2 -77.5,6",
+"-9,37 -9.4,38.7 -9.5,40 -8.8,42 -9.3,43 -3.5,43.5 -1.8,43.4 -1.2,46 -4.5,48.4 -1.5,48.7 -1.5,49.7 1.5,50.9 3.5,51.4 4.5,52.8 7,53.5 8.5,54 8.6,57 10.5,57.7 10.5,55 12,54.2 14,54 18,54.8 21,55 21,57 24,57.5 23.5,59.2 28,59.5 30,60 24,60 22,60.4 21.5,63 25,65.2 22,65.8 17.5,62.8 17.5,60.5 19,59.8 16.5,57 14.5,56 12.8,55.5 11.5,58.5 10.5,59.5 8,58 5.5,59 5,62 8,63.5 12,65.5 14.5,68 18,70 25,71 31,70 33,69.5 41,67 41,66 35,66 34,64 37,64 40,64.5 44,66.2 44,68.5 54,68.5 60,69 68,68.7 70,73 75,72.5 80,73.5 87,75 100,77.5 105,77 113,74 125,73.5 140,72.8 150,71.5 160,70 170,70 180,69 180,65.5 179,62.5 170,60 163,59.5 162.5,56 160,53 156.7,51 155.8,56 155,59.5 150,59.5 143,59.2 138,56 135,54.5 141,53 140.5,48.5 135,43.5 132,43 130,42.5 129.5,40.5 127.5,39.5 129.3,37 129,35.2 126.5,34.5 126.5,37.5 125,39.5 122,40.5 121.5,39 119,39 118,38.5 119,37.2 122.5,37 120.5,36 119,34.7 121.8,31.5 122,29.5 120,26 117,23.5 113.5,22 110.5,20.8 108,21.5 106.5,19.5 108.8,15.5 109.3,12 107,10.4 105,8.7 104.8,10.3 100.5,13.5 99.5,10.5 100.5,7 103.3,4.5 104.2,1.4 103.5,1.3 101,2.8 100.4,5.8 98.3,8 98.5,12 97.6,16.5 94.5,16 94.3,19.5 92.2,21.5 91,22.5 89,21.8 86.8,21 85,19.5 82,16.5 80.2,15 80.3,13 79.9,10.3 78.2,8.8 77.5,8 76.2,10 74.8,12.8 73.5,16.5 72.8,20.5 70,21 68.8,22.5 66.5,25.3 61.5,25.2 57,25.7 56.5,27 53,27.2 50.5,29.5 48.5,30 48,29.5 49.5,27 50.2,26.2 51.5,24.5 54.5,24.3 56.3,26 57,23.7 59.8,22.5 58.5,20.4 57.8,19 55,17 52.2,16 48.5,14 45,12.8 43.3,13 42.5,17 40.8,20.5 39,22 37,25.5 35,28 34.8,29.6 34.9,31.5 35.5,34 36,35.8 36.2,36.7 32.5,36.1 30.5,36.5 28.5,36.7 27.2,37 26.3,38.3 26.5,40 26,40.8 24,40.8 22.8,40.3 23.8,38 24,37.5 22.8,36.4 21.5,36.8 21.2,38.3 20.2,39.7 19.5,41.2 19.4,42 18.5,42.4 15.5,44.2 14.3,45.2 13.7,45.6 12.3,45.3 12.4,44.3 13.6,43.5 16,41.9 18.5,40.1 17,39 16.5,38 15.7,38 16.3,39.5 15.6,40.1 14,40.8 12.5,41.5 11,42.5 10.2,43.8 8.8,44.4 7.5,43.8 4,43.4 3.1,43 3.2,41.8 0.8,41 -0.3,39.5 0,38.7 -0.8,37.6 -2.2,36.7 -4.5,36.7 -5.4,36 -6.3,36.8 -7.4,37.2",
+"-9.8,30 -6,35.8 -2,35 3,36.8 10,37.3 11,33.5 15,32.3 20,32 20,30.5 25,31.7 32,31.2 34.2,31.2 34.8,29.6 34.3,27.9 35.5,24 37.5,19 39,15.5 43,12.5 43.5,11.7 51,11.8 51,10.4 48,5 44,1 41,-2 39.5,-5 39,-8 40.5,-11 40.5,-15 37,-18 35,-23 33,-25.5 32.5,-28.5 30,-31.5 27,-33.5 22,-34.2 18.4,-34.2 17,-30 14.5,-23 12,-17.5 13.5,-12 12,-6 9,-1 9.5,3.5 6,4.3 3,6.3 -2,4.8 -7.5,4.4 -11.5,6.5 -13.5,9.5 -16.8,12.5 -17.2,14.7 -16.5,19.5 -17,21 -15,26.5 -13,28",
+"-73,78 -60,82 -30,83.5 -20,81 -18,76 -22,70 -32,68 -40,65 -43,60 -50,62 -53,66 -56,70 -68,76",
+"-80,73.5 -68,70 -62,66.5 -65,63 -72,64 -78,64.5 -74,68.5",
+"-5.7,50 1.4,51.1 1.7,52.7 0,53.5 -1.5,55 -2,56 -2,57.6 -3.5,58.6 -5,58.6 -6,57.5 -5.6,56 -4.8,55 -3,54.8 -3.5,53.3 -4.7,52.8 -4.2,51.6 -5.2,51.7 -3,51.3 -5.5,50.2",
+"-6,52.2 -6,54 -5.5,54.5 -8.5,55.2 -10,54.2 -10,52 -9.5,51.5 -7.5,52",
+"-24,65.5 -22,66.4 -16,66.5 -13.5,65 -18,63.4 -22.5,63.8",
+"12.5,38 15.6,38.2 15.1,36.7 12.5,37.6","8.2,41 9.7,41 9.5,39 8.5,39",
+"-85,22 -82,23.2 -77,21.5 -74.2,20.2 -77.5,20 -80,21.7","-74.4,18.5 -72,19.9 -68.4,18.6 -71,17.9",
+"49.3,-12 50.4,-15.5 47.5,-25 45,-25.5 43.5,-22 44,-17 47,-15",
+"130.8,31 131.5,33.3 135,33.5 139.8,35 141,38 142,40 141.3,41.5 140,40 139.5,38 136.7,37 135.5,35.6 132,35.5 130.8,34","140,42 141.5,45.4 145.5,43.3 143,42",
+"120,18 122,18.3 124,13 126.5,7 125.5,6 122,7 121,12.5",
+"95.3,5.6 100,2 104,-1 106,-3 105.8,-5.8 102,-4 98,0.5","105.2,-6.8 114.5,-7.7 114.4,-8.7 106,-7.4","109,1.5 111,1.8 117,7 119,5 118,1 116,-3.8 111.5,-3.3 109.5,-0.5",
+"131,-1 141,-2.5 150,-10 143,-9 138,-8 135,-4",
+"114,-22 122,-18 126,-14 131,-12 136,-12 136.8,-15 141,-12.5 142.5,-10.7 144,-14.5 146,-19 150,-23 153.5,-26 153,-31 150.5,-37 146,-39 141,-38 138.5,-35.5 135.5,-34.7 131,-31.5 124,-33.5 118,-35 115,-34 115.7,-31 113.5,-26",
+"172.7,-34.5 178.5,-37.7 175,-41.5 174.5,-39","172.7,-40.5 174.2,-41.8 171,-44.5 168,-46.5 166.5,-46 170.5,-43",
+"-180,-90 -180,-78 -155,-78.5 -130,-74 -100,-73 -75,-72 -65,-66 -60,-64 -55,-70 -30,-72 0,-70 30,-69 60,-67 90,-66 110,-66.5 135,-66 150,-69 165,-71 180,-78 180,-90"];
+const SEA=["28,41.5 31,41.1 35.5,42 38.5,41 41.5,41.6 41.5,42.7 37.5,44.7 36.5,45.3 34,44.4 33.5,45.5 31,46.5 30.2,45.3 28.8,44.2 27.9,42.7","47.5,45 49.5,46.4 53,45.2 51,43 52.8,41.2 54,40.2 53.9,37.3 50.5,36.9 49,38 49.5,40.4 48.5,41.8 47,44"];
+const mk=s=>{const p=s.split(' ').map(q=>q.split(',').map(Number)),X=p.map(a=>a[0]),Y=p.map(a=>a[1]);return{p,a:Math.min(...X),b:Math.max(...X),c:Math.min(...Y),d:Math.max(...Y)}};
+const LP=LAND.map(mk),SP=SEA.map(mk);
+const inP=(P,x,y)=>{if(x<P.a||x>P.b||y<P.c||y>P.d)return false;let o=false;const p=P.p;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])o=!o}return o};
+const land=(x,y)=>LP.some(P=>inP(P,x,y))&&!SP.some(P=>inP(P,x,y));
+const V3=(la,lo)=>{la*=RD;lo*=RD;return[Math.cos(la)*Math.sin(lo),Math.sin(la),Math.cos(la)*Math.cos(lo)]};
+
+/* ---------- bandeiras ---------- */
+const FG={
+PT:'<rect width="30" height="20" fill="#f00"/><rect width="12" height="20" fill="#060"/><circle cx="12" cy="10" r="3.4" fill="#fc0" stroke="#fff" stroke-width=".8"/>',
+IE:'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#169b62"/><rect x="20" width="10" height="20" fill="#ff883e"/>',
+HU:'<rect width="30" height="20" fill="#fff"/><rect width="30" height="6.700" fill="#cd2a3e"/><rect y="13.300" width="30" height="6.700" fill="#436f4d"/>',
+IT:'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#009246"/><rect x="20" width="10" height="20" fill="#ce2b37"/>',
+AT:'<rect width="30" height="20" fill="#fff"/><rect width="30" height="6.700" fill="#ed2939"/><rect y="13.300" width="30" height="6.700" fill="#ed2939"/>',
+BR:'<rect width="30" height="20" fill="#009c3b"/><path d="M15 2.500L27 10 15 17.500 3 10z" fill="#ffdf00"/><circle cx="15" cy="10" r="4.200" fill="#002776"/>'};
+const flag=c=>'<svg viewBox="0 0 30 20" width="24" height="16" aria-hidden="true">'+FG[c]+'</svg>';
+const flags=cc=>'<span class="fl">'+cc.map(flag).join('<i>→</i>')+'</span>';
+/* ---------- dados ---------- */
+/* [dia, título, tag, texto, [[rótulo,valor]], foco, trecho(s), base, dorme em, estadia, países] */
+const D=[
+[3,'Em trânsito','Voo noturno','Saída de Campinas às 21h05 rumo a Lisboa. Voo Azul 8752.',[['Saída','21h05'],['Voo','Azul 8752'],['Rota','VCP → LIS']],'VCP',0,'VCP','A bordo',null,['BR','PT']],
+[4,'Lisboa','Chegada','Chegada ao aeroporto de Lisboa às 10h10. Primeiro dia em Portugal.',[['Chegada','10h10'],['Aeroporto','LIS']],'LIS',-1,'LIS','Costa da Caparica',0,['PT']],
+[5,'Lisboa','Dia livre','Dia livre em Lisboa. Passeios ainda serão definidos.',[['Passeios','A planejar']],'LIS',-1,'LIS','Costa da Caparica',0,['PT']],
+[6,'Lisboa','Dia livre','Mais um dia para descobrir Lisboa. Passeios ainda serão definidos.',[['Passeios','A planejar']],'LIS',-1,'LIS','Costa da Caparica',0,['PT']],
+[7,'Lisboa → Dublin','Voo','Último dia em Lisboa. Voo Ryanair às 20h30, chegada a Dublin às 23h20.',[['Saída','20h30'],['Chegada','23h20'],['Voo','Ryanair']],'LIS',1,'LIS','Dublin',1,['PT','IE']],
+[8,'Dublin','Dia livre','Primeiro dia inteiro na Irlanda. Passeios a definir.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[9,'Dublin','Dia livre','Explorando Dublin. Passeios a definir.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[10,'Dublin','Dia livre','Último dia inteiro antes do voo para a Hungria.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[11,'Dublin → Budapeste','Voo','Ryanair FR1023: partida às 10h35 e chegada a Budapeste às 14h30.',[['Saída','10h35'],['Chegada','14h30'],['Voo','FR1023']],'BUD',2,'BUD','Rose Apartment',2,['IE','HU']],
+[12,'Budapeste','Dia livre','Dia livre para conhecer Budapeste. Passeios a definir.',[['Passeios','A definir']],'BUD',-1,'BUD','Rose Apartment',2,['HU']],
+[13,'Budapeste','Dia livre','Mais um dia na capital húngara. Passeios a definir.',[['Passeios','A definir']],'BUD',-1,'BUD','Rose Apartment',2,['HU']],
+[14,'Budapeste ⇄ Viena','Trem · ida e volta','Dia de bate-volta de trem de Budapeste a Viena, na Áustria, voltando para dormir em Budapeste. Bilhetes e horários ainda a definir.',[['Transporte','Trem'],['Trecho','BUD ⇄ VIE'],['Horários','A definir']],'VIE',7,'BUD','Rose Apartment',2,['HU','AT']],
+[15,'Budapeste','Dia livre','Dia livre em Budapeste. Passeios a definir.',[['Passeios','A definir']],'BUD',-1,'BUD','Rose Apartment',2,['HU']],
+[16,'Budapeste → Dublin','Voo','Último dia em Budapeste. Voo Ryanair FR1200 às 22h00, chegada a Dublin às 00h10 do dia 17.',[['Saída','22h00'],['Chegada','00h10 (+1)'],['Voo','FR1200']],'BUD',3,'BUD','A caminho de Dublin',null,['HU','IE']],
+[17,'Dublin','Chegada','Chegada à Irlanda às 00h10. Início da segunda estadia em Dublin.',[['Chegada','00h10']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[18,'Dublin','Dia livre','Dia livre em Dublin. Passeios a definir.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[19,'Dublin','Dia livre','Dia livre em Dublin. Passeios a definir.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[20,'Dublin','Dia livre','Dia livre em Dublin. Passeios a definir.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[21,'Dublin','Dia livre','Último dia inteiro na Irlanda antes da partida para a Itália.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
+[22,'Dublin → Veneza','Voo + ônibus','Ryanair FR6126 às 07h20, chegada a Bérgamo às 10h50. FlixBus às 13h55, chegada a Veneza Tronchetto às 17h10.',[['Voo FR6126','07h20 → 10h50'],['FlixBus 405','13h55 → 17h10']],'VCE',[4,5],'VCE','Veneza',3,['IE','IT']],
+[23,'Veneza → São Paulo','Voo','Último dia na Itália. Voo Air Europa às 18h40 de Veneza (VCE), com uma conexão, rumo a Guarulhos.',[['Saída','18h40'],['Voos','UX1084 + UX57'],['Conexões','1']],'VCE',6,'VCE','A bordo',null,['IT','BR']],
+[24,'São Paulo','Chegada','Chegada a Guarulhos às 06h30. Fim da Eurotrip 2026.',[['Chegada','06h30'],['Aeroporto','GRU']],'VCP',-1,'VCP','',null,['BR']]];
+/* [data, de, para, cidade de, cidade para, saída, chegada, +dia, companhia, dia, tipo 0 voo 1 ônibus 2 trem] */
+const TR=[['03 → 04 nov','VCP','LIS','Campinas','Lisboa','21h05','10h10','+1','Azul · voo 8752',3],
+['07 nov','LIS','DUB','Lisboa','Dublin','20h30','23h20','','Ryanair',7],
+['11 nov','DUB','BUD','Dublin','Budapeste','10h35','14h30','','Ryanair · FR1023',11],
+['14 nov','BUD','VIE','Budapeste','Viena','','','','Trem · ida e volta no mesmo dia',14,2],
+['16 → 17 nov','BUD','DUB','Budapeste','Dublin','22h00','00h10','+1','Ryanair · FR1200',16],
+['22 nov','DUB','BGY','Dublin','Bérgamo','07h20','10h50','','Ryanair · FR6126',22],
+['22 nov','BGY','VCE','Bérgamo','Veneza Tronchetto','13h55','17h10','','FlixBus · rota 405',22,1],
+['23 → 24 nov','VCE','GRU','Veneza','São Paulo','18h40','06h30','+1','Air Europa · UX1084 + UX57 · 1 conexão',23]];
+const M=u=>'https://www.google.com/maps/search/?api=1&query='+u;
+const ST=[['PT','Portugal','Costa da Caparica','04–07 nov · 3 noites','Base para conhecer Lisboa e arredores.',[['Ver hospedagem','https://www.airbnb.com.br/rooms/1594276134711622755'],['Ver região',M('Costa+da+Caparica+Portugal')]],4],
+['IE','Irlanda','Dublin','07–11 e 16–22 nov · 10 noites','Casa da sua irmã.',[['Ver Dublin',M('Dublin+Ireland')]],7],
+['HU','Hungria','Rose Apartment','11–16 nov · 5 noites','Rózsa utca 47, 1077 Budapeste.<br>Entrada: 11/11 a partir das 16h.<br>Saída: 16/11 até as 10h.<br>Chaves em cofre no local.',[['Abrir localização',M('R%C3%B3zsa+utca+47+Budapest')]],11],
+['IT','Itália','Veneza','22–23 nov · 1 noite','Chegada pelo terminal de Tronchetto.',[['Ver hospedagem','https://www.airbnb.com.br/rooms/30760815'],['Terminal de chegada',M('Venezia+Tronchetto')]],22]];
+/* cidade: [lat,lon,rótulo,lado,—,rótulo fixo,—,busca no mapa] */
+const C={VCP:[-22.9,-47.1,'Campinas / SP','r',0,1,0,'Campinas+SP'],LIS:[38.7,-9.1,'Lisboa','r',0,1,0,'Lisboa+Portugal'],DUB:[53.35,-6.26,'Dublin','r',0,1,0,'Dublin+Ireland'],BUD:[47.5,19.04,'Budapeste','r',0,1,0,'Budapest+Hungary'],VIE:[48.2,16.37,'Viena','l',0,1,0,'Wien+Austria'],VCE:[45.44,12.32,'Veneza','r',0,1,0,'Venezia+Italy'],BGY:[45.67,9.7,'Bérgamo','l',0,0,0,'Bergamo+Italy']};
+const L=[['VCP','LIS'],['LIS','DUB'],['DUB','BUD'],['BUD','DUB'],['DUB','BGY'],['BGY','VCE'],['VCE','VCP'],['BUD','VIE']];
+const GROUND=[5,7],CN=[['PORTUGAL',-7.6,41.4],['IRLANDA',-8.4,52.2],['HUNGRIA',20.2,46.9],['ÁUSTRIA',14,47.6],['ITÁLIA',11.8,42.8],['BRASIL',-52,-14]];
+const FIRST={VCP:3,LIS:4,DUB:8,BUD:12,VIE:14,VCE:22,BGY:22};
+/* ---------- mapa plano ---------- */
+function MapView(box,onpin){
+const cv=box.querySelector('canvas'),x=cv.getContext('2d'),CAP=84;
+let W=0,H=0,pts=[],v=null,t=null,zo=0,act=[],lg=[],col={},vis=true,dr=null,mv=0,pins=[];
+const mx=lo=>lo*RD,my=la=>Math.log(Math.tan(Math.PI/4+cl(la,-80,80)*RD/2));
+const PL=LP.filter(P=>P.c>-60).map(P=>P.p.map(q=>[mx(q[0]),my(q[1])])),SL=SP.map(P=>P.p.map(q=>[mx(q[0]),my(q[1])]));
+const cols=()=>{const s=getComputedStyle(root),g=n=>s.getPropertyValue(n).trim();col={land:g('--land'),map:g('--mapbg'),pin:g('--pin'),ink:g('--ink'),bg:g('--bg'),mute:g('--mute'),line:g('--line')}};cols();
+function target(){if(!W||!pts.length)return null;let a=1e9,b=-1e9,c=1e9,d=-1e9;pts.forEach(k=>{const q=C[k],X=mx(q[1]),Y=my(q[0]);a=Math.min(a,X);b=Math.max(b,X);c=Math.min(c,Y);d=Math.max(d,Y)});
+const min=pts.length>1&&b-a<.2&&d-c<.2?.14:.3,hh=H-CAP,sx=Math.max((b-a)*1.5+.07,min),sy=Math.max((d-c)*1.5+.07,min*hh/W);
+return{cx:(a+b)/2,cy:(c+d)/2,ls:Math.log(Math.min(W/sx,hh/sy))+zo}}
+new ResizeObserver(()=>{const d=Math.min(devicePixelRatio||1,2);W=box.clientWidth;H=box.clientHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0);if(W){const n=target();if(n){t=n;if(!v)v={...n}}}}).observe(box);
+new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(box);
+box.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;dr={x:e.clientX,y:e.clientY};mv=0;box.setPointerCapture(e.pointerId)});
+box.addEventListener('pointermove',e=>{if(!dr||!v)return;const dx=e.clientX-dr.x,dy=e.clientY-dr.y;dr.x=e.clientX;dr.y=e.clientY;mv+=Math.abs(dx)+Math.abs(dy);const s=Math.exp(v.ls);v.cx-=dx/s;t.cx-=dx/s;if(e.pointerType==='mouse'){v.cy+=dy/s;t.cy+=dy/s}});
+box.addEventListener('pointerup',e=>{if(dr&&mv<7){const r=box.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;let best=null,bd=1e9;pins.forEach(p=>{const d=Math.hypot(p.x-px,p.y-py);if(d<p.r&&d<bd){bd=d;best=p.k}});if(best)onpin(best)}dr=null});
+box.addEventListener('pointercancel',()=>dr=null);
+function draw(tm){
+if(!W||!v)return;const s=Math.exp(v.ls),hh=H-CAP,PX=X=>W/2+(X-v.cx)*s,PY=Y=>hh/2-(Y-v.cy)*s,pt=k=>[PX(mx(C[k][1])),PY(my(C[k][0]))];
+x.clearRect(0,0,W,H);x.lineJoin='round';
+const path=p=>{x.beginPath();p.forEach((q,i)=>{const a=PX(q[0]),b=PY(q[1]);i?x.lineTo(a,b):x.moveTo(a,b)});x.closePath()};
+x.fillStyle=col.land;PL.forEach(p=>{path(p);x.fill()});x.fillStyle=col.map;SL.forEach(p=>{path(p);x.fill()});
+x.strokeStyle=col.line;x.lineWidth=1;PL.forEach(p=>{path(p);x.stroke()});
+if(s*RD>5){x.font='500 10.500px Geist Mono,ui-monospace,monospace';x.textAlign='center';x.fillStyle=col.mute;x.globalAlpha=.7;CN.forEach(c=>{const a=PX(mx(c[1])),b=PY(my(c[2]));if(a>0&&a<W&&b>0&&b<hh)x.fillText(c[0].split('').join(String.fromCharCode(8202)),a,b)});x.globalAlpha=1}
+/* rotas */
+const curve=(i)=>{const A=pt(L[i][0]),B=pt(L[i][1]),dx=B[0]-A[0],dy=B[1]-A[1],k=GROUND.includes(i)?0:.17;let nx=-dy*k,ny=dx*k;if(ny>0){nx=-nx;ny=-ny}return[A,[(A[0]+B[0])/2+nx,(A[1]+B[1])/2+ny],B]};
+const order=L.map((_,i)=>i).sort((p,q)=>lg.includes(p)-lg.includes(q));
+order.forEach(i=>{const on=lg.includes(i),[A,Cc,B]=curve(i);x.beginPath();x.moveTo(A[0],A[1]);x.quadraticCurveTo(Cc[0],Cc[1],B[0],B[1]);x.setLineDash(GROUND.includes(i)?[7,6]:on?[]:[2,5]);x.lineWidth=on?3.2:1.4;x.strokeStyle=on?col.pin:col.mute;x.globalAlpha=on?1:.45;x.lineCap='round';x.stroke()});
+x.globalAlpha=1;x.setLineDash([]);
+lg.forEach(i=>{const[A,Cc,B]=curve(i),u=(RM?.5:(tm/1000*.22)%1),w=1-u,px=w*w*A[0]+2*w*u*Cc[0]+u*u*B[0],py=w*w*A[1]+2*w*u*Cc[1]+u*u*B[1];x.fillStyle='#fff';x.strokeStyle=col.pin;x.lineWidth=3;x.beginPath();x.arc(px,py,6,0,TAU);x.fill();x.stroke()});
+/* pinos */
+pins=[];const used=[],keys=Object.keys(C).map(k=>({k,p:pt(k),on:act.includes(k)})).filter(a=>a.p[0]>-30&&a.p[0]<W+30&&a.p[1]>-30&&a.p[1]<hh+30).sort((a,b)=>a.on-b.on);
+const pin=(px,py,rr,fill)=>{const h=rr*2;x.beginPath();x.moveTo(px,py);x.lineTo(px-.866*rr,py-h+.5*rr);x.arc(px,py-h,rr,2.618,.5236+TAU);x.closePath();x.fillStyle=fill;x.fill();x.strokeStyle=col.bg;x.lineWidth=2;x.stroke();x.beginPath();x.arc(px,py-h,rr*.4,0,TAU);x.fillStyle=col.bg;x.fill()};
+keys.forEach(a=>{if(a.k==='BGY'&&!a.on)return;const rr=a.on?10:6.5,[px,py]=a.p;a.rr=rr;
+if(a.on&&!RM){const q=(tm/1300)%1,e=5+q*20;x.strokeStyle=col.pin;x.globalAlpha=.5*(1-q);x.lineWidth=2;x.beginPath();x.ellipse(px,py,e,e*.4,0,0,TAU);x.stroke();x.globalAlpha=1}
+x.fillStyle='rgba(0,0,0,.2)';x.beginPath();x.ellipse(px,py,5,2,0,0,TAU);x.fill();
+pin(px,py,rr,a.on?col.pin:col.ink);used.push([px-rr,py-rr*3,px+rr,py]);pins.push({k:a.k,x:px,y:py-rr*2,r:rr+10})});
+x.font='600 13px Geist,system-ui,sans-serif';x.lineWidth=4;
+keys.slice().reverse().forEach(a=>{const c=C[a.k];if(!c[2]||a.rr==null||!(c[5]||a.on))return;const w=x.measureText(c[2]).width,ty=a.p[1]-a.rr*2+5;
+const tries=[[1,0],[-1,0],[0,-1],[0,1]];
+for(const [dx,dy] of (c[3]==='l'?[[-1,0],[1,0],[0,-1],[0,1]]:tries)){let tx,l,yy=ty;if(dy){tx=a.p[0];l=tx-w/2;yy=dy<0?a.p[1]-a.rr*3-6:a.p[1]+16}else{tx=a.p[0]+dx*(a.rr+6);l=dx<0?tx-w:tx}
+const rc=[l-2,yy-12,l+w+2,yy+4];if(rc[0]>4&&rc[2]<W-4&&!used.some(u=>rc[0]<u[2]&&rc[2]>u[0]&&rc[1]<u[3]&&rc[3]>u[1])){used.push(rc);x.textAlign=dy?'center':dx<0?'right':'left';x.strokeStyle=col.map;x.globalAlpha=.92;x.strokeText(c[2],tx,yy);x.globalAlpha=1;x.fillStyle=a.on?col.pin:col.ink;x.fillText(c[2],tx,yy);break}}})}
+return{
+frame(tm,dt){if(v&&t){const a=RM?1:1-Math.exp(-dt*5.5);v.cx+=(t.cx-v.cx)*a;v.cy+=(t.cy-v.cy)*a;v.ls+=(t.ls-v.ls)*a}if(vis)draw(tm)},
+go(p,a,l){pts=p;act=a;lg=l;zo=0;const n=target();if(n){t=n;if(!v)v={...n}}},
+zoom(d){zo=cl(zo+d,-1.2,1.5);const n=target();if(n)t=n},theme:cols}}
+const G=MapView($('#map'),k=>{show(FIRST[k]);});
+let last=0;requestAnimationFrame(function f(t){const dt=Math.min(.05,(t-last)/1000);last=t;if(!document.hidden)G.frame(t,dt);requestAnimationFrame(f)});
+$('#zi').onclick=()=>G.zoom(.45);$('#zo').onclick=()=>G.zoom(-.45);
+/* tema */
+const dm=matchMedia('(prefers-color-scheme:dark)');dm.addEventListener('change',()=>G.theme());
+$('#th').onclick=()=>{const dark=root.dataset.theme==='dark'||(!root.dataset.theme&&dm.matches),n=dark?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('eurotrip-theme',n)}catch(e){}G.theme()};
+/* abas */
+function tab(v){document.querySelectorAll('.view').forEach(s=>s.hidden=s.dataset.v!==v);document.querySelectorAll('.tb button').forEach(b=>b.classList.toggle('on',b.dataset.t===v));scrollTo(0,0);if(v==='roteiro')center(true)}
+document.querySelectorAll('.tb button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
+const toDay=d=>{tab('roteiro');show(d);$('#sc').scrollIntoView({behavior:'smooth',block:'start'})};
+/* ---------- início ---------- */
+const nw=new Date(),df=Math.round((new Date(2026,10,3)-new Date(nw.getFullYear(),nw.getMonth(),nw.getDate()))/864e5),inTrip=df<=0&&df>=-21,td=3-df,after=df<-21,ref=inTrip?td:3;
+const wk=d=>new Date(2026,10,d).toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','');
+const subTxt=df>0?'Faltam '+df+(df===1?' dia':' dias'):inTrip?'Dia '+(1-df)+' de 22':'Viagem concluída';
+document.querySelectorAll('.sub').forEach(e=>e.textContent=subTxt);
+/* ---------- dias ---------- */
+const sc=$('#sc'),grps=[];D.forEach(r=>{const g=grps[grps.length-1];g&&g.b===r[7]&&g.cc===r[10][r[10].length-1]?g.days.push(r):grps.push({b:r[7],cc:r[10][r[10].length-1],days:[r]})});
+const GN={VCP:'Brasil',LIS:'Lisboa',DUB:'Dublin',BUD:'Budapeste',VCE:'Veneza'};
+sc.innerHTML=grps.map(g=>'<div class="g"><div class="gl">'+(g.days.length>1?'<span class="fl">'+flag(g.cc)+'</span>'+GN[g.b]:'')+'</div><div class="cells">'+g.days.map(r=>{const d=r[0];return '<button class="dy'+(r[6]!==-1?' ev':'')+(after||(inTrip&&d<td)?' past':'')+(inTrip&&d===td?' today':'')+'" data-d="'+d+'" aria-pressed="false" aria-label="Dia '+d+', '+r[1]+'"><small>'+wk(d)+'</small><b>'+d+'</b><span class="bt"><i class="dt"></i></span></button>'}).join('')+'</div></div>').join('');
+sc.addEventListener('click',e=>{const b=e.target.closest('.dy');if(b)show(+b.dataset.d)});
+sc.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();show(sel+(e.key==='ArrowRight'?1:-1));sc.querySelector('.dy.on').focus()}});
+const SEG=[[3,'Saída · Campinas'],[4,'Lisboa'],[8,'Dublin'],[11,'Budapeste'],[17,'Dublin (volta)'],[22,'Veneza'],[24,'Volta ao Brasil']];
+$('#go').innerHTML=SEG.map(s=>'<option value="'+s[0]+'">'+s[1]+'</option>').join('');
+$('#go').onchange=e=>show(+e.target.value);
+function center(snap){const b=sc.querySelector('.dy.on');if(b&&sc.clientWidth)sc.scrollTo({left:b.offsetLeft-sc.clientWidth/2+b.offsetWidth/2,behavior:snap||RM?'auto':'smooth'})}
+function ends(r){if(r[6]===-1)return[r[5]];const s=new Set();[].concat(r[6]).forEach(i=>{s.add(L[i][0]);s.add(L[i][1])});return[...s]}
+let sel=0;
+function show(d,first){
+d=cl(d,3,24);const dir=d>sel?1:-1;sel=d;const r=D.find(q=>q[0]===d);
+sc.querySelectorAll('.dy').forEach(b=>{const on=+b.dataset.d===d;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.querySelector('.bt').innerHTML=on?flags(r[10].slice(-1)):'<i class="dt"></i>'});
+center(first);
+$('#go').value=SEG.filter(s=>s[0]<=d).pop()[0];
+const mp=[3,23,24].includes(d)?'':'<a class="btn w2" target="_blank" rel="noopener noreferrer" href="'+M(C[r[5]][7])+'">Abrir no Google Maps ↗</a>',stay=r[9]!=null?ST[r[9]]:null;
+$('#dc').innerHTML='<div class="top">'+flags(r[10])+'<span class="mono tag">'+r[2]+'</span></div>'
++'<div class="mono">'+wk(d)+' · '+String(d).padStart(2,'0')+' nov 2026 · dia '+(d-2)+' de 22</div><h2>'+r[1]+'</h2><p>'+r[3]+'</p>'
++'<div class="tiles">'+r[4].map(c=>'<div class="tile"><span class="mono">'+c[0]+'</span><b>'+c[1]+'</b></div>').join('')+'</div>'
++(stay?'<details class="acc"><summary><div><span class="mono">Dorme em</span><b>'+r[8]+'</b></div></summary><div class="in"><span>'+stay[3]+'</span><span>'+stay[4]+'</span><div class="lk">'+stay[5].map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+' ↗</a>').join('')+'</div></div></details>':r[8]?'<div class="tile"><span class="mono">Dorme em</span><b>'+r[8]+'</b></div>':'')
++'<div class="act"><button class="btn" data-go="'+(d-1)+'"'+(d===3?' disabled':'')+'>← Anterior</button><button class="btn pri" data-go="'+(d+1)+'"'+(d===24?' disabled':'')+'>Próximo →</button>'+mp+(inTrip&&d!==td?'<button class="btn w2" data-go="'+td+'">Ir para hoje</button>':'')+'</div>';
+if(!first&&!RM)$('#dc').animate([{opacity:.2,transform:'translateX('+dir*14+'px)'},{opacity:1,transform:'none'}],{duration:240,easing:'ease-out'});
+const ls=r[6]===-1?[]:[].concat(r[6]);
+$('#mcl').textContent=r[6]===-1?'Você está em':r[2];
+$('#mct').textContent=r[6]===-1?C[r[5]][2]:d===14?'BUD ⇄ VIE':ls.map(i=>L[i][0]+' → '+L[i][1]).join('  ·  ');
+G.go(ends(r),ends(r),ls)}
+$('#dc').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)show(+b.dataset.go)});
+let sx=0,sy=0;const dc=$('#dc');dc.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+dc.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>70&&Math.abs(dy)<40)show(sel+(dx<0?1:-1))},{passive:true});
+show(inTrip?td:4,true);
+/* ---------- voos ---------- */
+const ar='<svg class="ar" viewBox="0 0 34 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 5h32M27 1l5 4-5 4"/></svg>';
+const CC={VCP:'BR',LIS:'PT',DUB:'IE',BUD:'HU',VIE:'AT',BGY:'IT',VCE:'IT',GRU:'BR'},CNM={BR:'Brasil',PT:'Portugal',IE:'Irlanda',HU:'Hungria',AT:'Áustria',IT:'Itália'};
+const endOf=t=>{const m=(t[6]||'23h59').split('h');return new Date(2026,10,t[9]+(t[7]?1:0),+m[0],+m[1])};
+const stOf=t=>nw>endOf(t)?'done':nw>=new Date(2026,10,t[9])?'now':'next';
+const pt=(c,city,r)=>'<div class="pt'+(r?' r':'')+'"><span class="fl">'+flag(CC[c])+'</span><b>'+city+'</b><span class="mono">'+c+' · '+CNM[CC[c]]+'</span></div>';
+$('#passes').innerHTML=TR.map(t=>{const st=stOf(t),kind=['Voo','Ônibus','Trem'][t[10]||0];
+if(st==='done')return '<button class="pass done" data-day="'+t[9]+'"><span class="nm">'+flags([CC[t[1]],CC[t[2]]])+'<b>'+t[3]+' → '+t[4]+'</b></span><span class="mono">Encerrado</span></button>';
+return '<button class="pass'+(st==='now'?' now':'')+'" data-day="'+t[9]+'"><div class="hd"><span class="mono">'+t[0]+'</span><span class="mono'+(st==='now'?' tagn':'')+'">'+(st==='now'?'Hoje · ':'')+kind+'</span></div><div class="pr">'+pt(t[1],t[3])+ar+pt(t[2],t[4],1)+'</div>'
++'<div class="tm">'+(t[5]?'<div><span class="mono">Saída</span><b>'+t[5]+'</b></div><div><span class="mono">Chegada</span><b>'+t[6]+(t[7]?' <em>'+t[7]+'</em>':'')+'</b></div>':'<div><span class="mono">Horários</span><b>A definir</b></div>')+'</div><div class="cr">'+t[8]+'</div></button>'}).join('');
+document.querySelectorAll('.pass').forEach(b=>b.onclick=()=>toDay(+b.dataset.day));
+/* capa e próxima atividade */
+$('#cvs').textContent='03 → 24 nov 2026';$('#cvf').innerHTML=['PT','IE','HU','AT','IT'].map(flag).join('');
+(function(){const t=TR.find(q=>nw<=endOf(q));if(!t){$('#nxt').innerHTML='<div class="empty">Viagem concluída. Obrigado por acompanhar a Eurotrip.</div>';return}
+const st=stOf(t),dd=Math.round((new Date(2026,10,t[9])-new Date(nw.getFullYear(),nw.getMonth(),nw.getDate()))/864e5),when=st==='now'||dd<=0?'Hoje':dd===1?'Amanhã':'Em '+dd+' dias',kind=['Voo','Ônibus','Trem'][t[10]||0];
+$('#nxt').innerHTML='<button class="pass nxt'+(st==='now'?' now':'')+'" data-day="'+t[9]+'"><div class="hd"><span class="mono">Próxima atividade · '+kind+'</span><span class="mono tagn">'+when+'</span></div><div class="pr">'+pt(t[1],t[3])+ar+pt(t[2],t[4],1)+'</div><div class="cr">'+wk(t[9])+' '+t[0].split(' ')[0]+' nov · '+(t[5]?'saída '+t[5]:'horário a definir')+' · '+t[8]+'</div></button>';
+$('#nxt .pass').onclick=()=>{show(t[9]);$('#sc').scrollIntoView({behavior:'smooth',block:'start'})}})();
+/* ---------- estadias ---------- */
+$('#stays').innerHTML=ST.map((s,i)=>'<details class="acc"'+(i===0?' open':'')+'><summary><div style="gap:8px"><span class="fl">'+flag(s[0])+'</span><h3>'+s[2]+'</h3><span class="mono">'+s[3]+'</span></div></summary><div class="in"><p>'+s[4]+'</p><div class="lk">'+s[5].map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+' ↗</a>').join('')+'<button data-day="'+s[6]+'">Ver no roteiro</button></div></div></details>').join('');
+document.querySelectorAll('.stays [data-day]').forEach(b=>b.onclick=()=>toDay(+b.dataset.day));
+/* ---------- checklist ---------- */
+let LS=[];try{LS=JSON.parse(localStorage.getItem('eurotrip-lists')||'[]')}catch(e){}if(!Array.isArray(LS))LS=[];
+const save=()=>{try{localStorage.setItem('eurotrip-lists',JSON.stringify(LS))}catch(e){}},uid=()=>Math.random().toString(36).slice(2,9),esc=q=>q.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let armed=null,focusId=null;
+function rc(){const all=LS.flatMap(t=>t.items),n=all.filter(i=>i.done).length;
+$('#pg').style.width=(all.length?n/all.length*100:0)+'%';$('#pgn').textContent=all.length?n+' / '+all.length:'';document.querySelector('.pg').hidden=!all.length;
+$('#tops').innerHTML=LS.length?LS.map(t=>{const d=t.items.filter(i=>i.done).length;return '<details class="tp" data-id="'+t.id+'"'+(t.open===false?'':' open')+'><summary><h3>'+esc(t.name)+'</h3><span class="mono">'+d+' / '+t.items.length+'</span></summary><div class="body">'
++t.items.map(i=>'<div class="it"><label><input type="checkbox" data-t="'+t.id+'" data-i="'+i.id+'"'+(i.done?' checked':'')+'><span>'+esc(i.t)+'</span></label><button class="x" data-xt="'+t.id+'" data-xi="'+i.id+'" aria-label="Remover item">×</button></div>').join('')
++'<form class="addi" data-t="'+t.id+'"><input id="ni-'+t.id+'" placeholder="Novo item" autocomplete="off" maxlength="80" aria-label="Novo item em '+esc(t.name)+'"><button class="btn" type="submit" aria-label="Adicionar item">+</button></form>'
++'<button class="del'+(armed===t.id?' arm':'')+'" data-del="'+t.id+'">'+(armed===t.id?'Toque de novo para excluir':'Excluir tópico')+'</button></div></details>'}).join(''):'<div class="empty">Nenhum tópico ainda.<br>Crie o primeiro acima, como Documentos, Roupas ou Eletrônicos, e depois adicione os itens dentro dele.</div>';
+if(focusId){const e=document.getElementById(focusId);if(e)e.focus();focusId=null}}
+$('#addt').onsubmit=e=>{e.preventDefault();const v=$('#nt').value.trim();if(!v)return;const t={id:uid(),name:v,items:[],open:true};LS.push(t);$('#nt').value='';save();focusId='ni-'+t.id;rc()};
+const tops=$('#tops');
+tops.addEventListener('submit',e=>{e.preventDefault();const f=e.target.closest('.addi');if(!f)return;const v=f.querySelector('input').value.trim(),t=LS.find(q=>q.id===f.dataset.t);if(!v||!t)return;t.items.push({id:uid(),t:v,done:false});save();focusId='ni-'+t.id;rc()});
+tops.addEventListener('change',e=>{const c=e.target.closest('input[type=checkbox]');if(!c)return;const it=LS.find(q=>q.id===c.dataset.t).items.find(q=>q.id===c.dataset.i);it.done=c.checked;save();rc()});
+tops.addEventListener('click',e=>{const x=e.target.closest('.x'),d=e.target.closest('.del');
+if(x){const t=LS.find(q=>q.id===x.dataset.xt);t.items=t.items.filter(q=>q.id!==x.dataset.xi);save();rc()}
+else if(d){if(armed===d.dataset.del){LS=LS.filter(q=>q.id!==armed);armed=null;save()}else armed=d.dataset.del;rc()}
+else armed=null});
+tops.addEventListener('toggle',e=>{const dt=e.target.closest&&e.target.closest('.tp');if(!dt)return;const t=LS.find(q=>q.id===dt.dataset.id);if(t&&t.open!==dt.open){t.open=dt.open;save()}},true);
+rc();
+tab(['roteiro','voos','estadias','checklist'].includes(location.hash.slice(1))?location.hash.slice(1):'roteiro');
+</script>
+
+</body>
+</html>
