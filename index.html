@@ -121,6 +121,65 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .act{display:grid;grid-template-columns:1fr 1fr;gap:8px}.act .w2{grid-column:1/-1}
 
+/* país e dias (guia) */
+.cn{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cn button{display:flex;flex-direction:column;align-items:center;gap:7px;padding:11px 4px 10px;border:1px solid var(--line);border-radius:16px;background:var(--surface);cursor:pointer;font-size:13px;font-weight:500;transition:border-color .2s,background .2s}
+.cn .fl svg{width:28px;height:auto}
+.cn button.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 9%,var(--surface))}
+.guide{display:flex;flex-direction:column;gap:10px}
+.cs,.dd{scroll-margin-top:calc(64px + env(safe-area-inset-top,0px))}
+.cs{display:flex;align-items:center;gap:10px;padding:20px 2px 2px}
+.cs:first-child{padding-top:4px}
+.cs .fl svg{width:26px;height:auto}
+.cs b{font:600 22px/1 var(--disp);letter-spacing:-.025em}
+.cs .mono{margin-left:auto;text-align:right}
+.cs .ct{display:block;font-size:12px;color:var(--mute);margin-top:3px;font-weight:400;letter-spacing:0;font-family:var(--body)}
+.dd{background:var(--surface);border:1px solid var(--line);border-radius:20px;transition:border-color .3s}
+.dd.open{border-color:color-mix(in srgb,var(--acc) 42%,var(--line))}
+.dh{display:flex;align-items:center;gap:14px;width:100%;padding:13px 16px;min-height:70px;border:0;background:none;text-align:left;cursor:pointer;border-radius:20px}
+.dn{flex:none;width:42px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.dn small{font:500 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.dn b{font:600 27px/1 var(--disp);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dm{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.dm b{font:600 17px/1.2 var(--disp);letter-spacing:-.015em;overflow-wrap:anywhere}
+.dm span{font-size:13px;line-height:1.4;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dr{flex:none;display:flex;align-items:center;gap:8px}
+.eb{display:inline-flex;align-items:center;gap:5px;font:500 12px var(--mono);color:var(--acc);background:color-mix(in srgb,var(--acc) 11%,transparent);padding:5px 9px;border-radius:20px;white-space:nowrap}
+.eb svg{width:13px;height:13px}
+.cnt{font:500 11px var(--mono);color:var(--mute)}
+.chev{width:8px;height:8px;border:solid var(--mute);border-width:0 1.5px 1.5px 0;transform:rotate(45deg) translate(-1px,-1px);transition:transform .3s;margin-right:3px}
+.dd.open .chev{transform:rotate(-135deg) translate(-1px,-1px)}
+.bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease}
+.dd.open .bd{grid-template-rows:1fr}
+.bd>div{min-height:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .32s}
+.dd.open .bd>div{opacity:1;visibility:visible;transition:opacity .3s .08s,visibility 0s}
+.bi{padding:2px 16px 16px;display:flex;flex-direction:column;gap:14px;overflow-wrap:anywhere}
+.mslot .map{height:min(76vw,300px);border-radius:18px}
+.mslot .mapw{gap:8px}
+.evs{display:flex;flex-direction:column;gap:8px}
+.ev{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--acc) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--acc) 32%,var(--line))}
+.ev.pn{background:transparent;border-style:dashed}
+.ev svg{flex:none;width:18px;height:18px;color:var(--acc)}
+.ev time{flex:none;font:600 15px var(--mono);color:var(--acc);min-width:48px;font-variant-numeric:tabular-nums}
+.ev span{font-size:14px;line-height:1.35}
+.pls{display:flex;flex-direction:column}
+.pl{display:flex;align-items:center;gap:10px;min-height:48px;border-top:1px solid var(--line)}
+.pls>:first-child>.pl:first-child{border-top:0}
+.pp:empty+.mine .pl:first-child{border-top:0}
+.mk{flex:none;width:44px;height:44px;margin:-8px -6px -8px -12px;border:0;background:none;display:grid;place-items:center;cursor:pointer;padding:0}
+.mk i{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--mute);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.pl.p .mk i{border-style:dashed}
+.pl.v .mk i{background:var(--acc);border:1.5px solid var(--acc)}
+.pl.v .mk i::after{content:"";width:9px;height:5px;border:2px solid var(--acc-ink);border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.pl .tx{flex:1;min-width:0;font-size:15px;line-height:1.35;padding-block:8px}
+.pl .tx small{font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-left:6px;white-space:nowrap}
+.pl.v .tx{color:var(--mute);text-decoration:line-through}
+.pl .go,.pl .x{flex:none;width:40px;height:40px;display:grid;place-items:center;border:0;background:none;color:var(--mute);border-radius:50%;font-size:20px;line-height:1;cursor:pointer}
+.pl .go svg{width:15px;height:15px}
+.fm{color:var(--mute);line-height:1.6;font-size:15px;padding-block:4px}
+.nt{font-size:13px;line-height:1.5;color:var(--mute)}
+.addn{padding-top:12px;border-top:1px solid var(--line)}
+
 /* voos */
 .passes{display:flex;flex-direction:column;gap:10px}
 .pass{display:flex;flex-direction:column;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;cursor:pointer;width:100%}
@@ -237,16 +296,19 @@ el.addEventListener('click',end);setTimeout(end,6000*slow);
     <h1 class="cv">Eurotrip <span>2026</span></h1>
     <div id="nxt"></div>
   </div>
-  <div class="sh"><h2>Roteiro</h2><label class="selw"><select id="go" aria-label="Ir para uma parada"></select></label></div>
+  <div class="sh"><h2>Roteiro</h2><span class="mono" id="rs"></span></div>
+  <div class="cn" id="cn" role="group" aria-label="Países"></div>
   <div class="sc" id="sc" role="group" aria-label="Dias da viagem"></div>
-  <div class="mapw">
-    <div class="map" id="map" role="img" aria-label="Mapa da viagem com pino vermelho onde estaremos no dia escolhido"><canvas></canvas>
-      <div class="zm"><button id="zi" aria-label="Aproximar">+</button><button id="zo" aria-label="Afastar">−</button></div>
-      <div class="mcap"><svg viewBox="0 0 22 30" aria-hidden="true"><path d="M11 29C11 29 2 18.5 2 11a9 9 0 0 1 18 0c0 7.500-9 18-9 18z" fill="var(--pin)"/><circle cx="11" cy="11" r="3.600" fill="var(--bg)"/></svg><div><span class="mono" id="mcl"></span><b id="mct"></b></div></div>
+  <div class="guide" id="guide"></div>
+  <div id="mhold" hidden>
+    <div class="mapw">
+      <div class="map" id="map" role="img" aria-label="Mapa do dia com pino vermelho onde estaremos"><canvas></canvas>
+        <div class="zm"><button id="zi" aria-label="Aproximar">+</button><button id="zo" aria-label="Afastar">−</button></div>
+        <div class="mcap"><svg viewBox="0 0 22 30" aria-hidden="true"><path d="M11 29C11 29 2 18.5 2 11a9 9 0 0 1 18 0c0 7.500-9 18-9 18z" fill="var(--pin)"/><circle cx="11" cy="11" r="3.600" fill="var(--bg)"/></svg><div><span class="mono" id="mcl"></span><b id="mct"></b></div></div>
+      </div>
+      <div class="lgd mono"><span><i></i>Onde estamos / em deslocamento</span><span><i class="n"></i>Outras paradas</span></div>
     </div>
-    <div class="lgd mono"><span><i></i>Onde estamos / em deslocamento</span><span><i class="n"></i>Outras paradas</span></div>
   </div>
-  <article class="dc" id="dc" aria-live="polite"></article>
 </section>
 
 <section class="view" id="v-voos" data-v="voos" hidden>
@@ -337,7 +399,7 @@ const D=[
 [20,'Dublin','Dia livre','Dia livre em Dublin. Passeios a definir.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
 [21,'Dublin','Dia livre','Último dia inteiro na Irlanda antes da partida para a Itália.',[['Passeios','A definir']],'DUB',-1,'DUB','Dublin',1,['IE']],
 [22,'Dublin → Veneza','Voo + ônibus','Ryanair FR6126 às 07h20, chegada a Bérgamo às 10h50. FlixBus às 13h55, chegada a Veneza Tronchetto às 17h10.',[['Voo FR6126','07h20 → 10h50'],['FlixBus 405','13h55 → 17h10']],'VCE',[4,5],'VCE','Veneza',3,['IE','IT']],
-[23,'Veneza → São Paulo','Voo','Último dia na Itália. Voo Air Europa às 18h40 de Veneza (VCE), com uma conexão, rumo a Guarulhos.',[['Saída','18h40'],['Voos','UX1084 + UX57'],['Conexões','1']],'VCE',6,'VCE','A bordo',null,['IT','BR']],
+[23,'Veneza → São Paulo','Voo','Air Europa: UX1084 de Veneza a Madrid (18h40 → 21h25), escala de 2h30 e UX057 de Madrid a Guarulhos (23h55 → 06h30 do dia 24).',[['Saída','18h40'],['Escala','Madrid · 2h30'],['Chegada','06h30 (+1)']],'VCE',[6,8],'VCE','A bordo',null,['IT','BR']],
 [24,'São Paulo','Chegada','Chegada a Guarulhos às 06h30. Fim da Eurotrip 2026.',[['Chegada','06h30'],['Aeroporto','GRU']],'VCP',-1,'VCP','',null,['BR']]];
 /* [data, de, para, cidade de, cidade para, saída, chegada, +dia, companhia, dia, tipo 0 voo 1 ônibus 2 trem] */
 const TR=[['03 → 04 nov','VCP','LIS','Campinas','Lisboa','21h05','10h10','+1','Azul · voo 8752',3],
@@ -347,17 +409,17 @@ const TR=[['03 → 04 nov','VCP','LIS','Campinas','Lisboa','21h05','10h10','+1',
 ['16 → 17 nov','BUD','DUB','Budapeste','Dublin','22h00','00h10','+1','Ryanair · FR1200',16],
 ['22 nov','DUB','BGY','Dublin','Bérgamo','07h20','10h50','','Ryanair · FR6126',22],
 ['22 nov','BGY','VCE','Bérgamo','Veneza Tronchetto','13h55','17h10','','FlixBus · rota 405',22,1],
-['23 → 24 nov','VCE','GRU','Veneza','São Paulo','18h40','06h30','+1','Air Europa · UX1084 + UX57 · 1 conexão',23]];
+['23 → 24 nov','VCE','GRU','Veneza','São Paulo','18h40','06h30','+1','Air Europa · UX1084 + UX057 · escala em Madrid (2h30)',23]];
 const M=u=>'https://www.google.com/maps/search/?api=1&query='+u;
 const ST=[['PT','Portugal','Costa da Caparica','04–07 nov · 3 noites','Base para conhecer Lisboa e arredores.',[['Ver hospedagem','https://www.airbnb.com.br/rooms/1594276134711622755'],['Ver região',M('Costa+da+Caparica+Portugal')]],4],
 ['IE','Irlanda','Dublin','07–11 e 16–22 nov · 10 noites','Casa da sua irmã.',[['Ver Dublin',M('Dublin+Ireland')]],7],
 ['HU','Hungria','Rose Apartment','11–16 nov · 5 noites','Rózsa utca 47, 1077 Budapeste.<br>Entrada: 11/11 a partir das 16h.<br>Saída: 16/11 até as 10h.<br>Chaves em cofre no local.',[['Abrir localização',M('R%C3%B3zsa+utca+47+Budapest')]],11],
 ['IT','Itália','Veneza','22–23 nov · 1 noite','Chegada pelo terminal de Tronchetto.',[['Ver hospedagem','https://www.airbnb.com.br/rooms/30760815'],['Terminal de chegada',M('Venezia+Tronchetto')]],22]];
 /* cidade: [lat,lon,rótulo,lado,—,rótulo fixo,—,busca no mapa] */
-const C={VCP:[-22.9,-47.1,'Campinas / SP','r',0,1,0,'Campinas+SP'],LIS:[38.7,-9.1,'Lisboa','r',0,1,0,'Lisboa+Portugal'],DUB:[53.35,-6.26,'Dublin','r',0,1,0,'Dublin+Ireland'],BUD:[47.5,19.04,'Budapeste','r',0,1,0,'Budapest+Hungary'],VIE:[48.2,16.37,'Viena','l',0,1,0,'Wien+Austria'],VCE:[45.44,12.32,'Veneza','r',0,1,0,'Venezia+Italy'],BGY:[45.67,9.7,'Bérgamo','l',0,0,0,'Bergamo+Italy']};
-const L=[['VCP','LIS'],['LIS','DUB'],['DUB','BUD'],['BUD','DUB'],['DUB','BGY'],['BGY','VCE'],['VCE','VCP'],['BUD','VIE']];
+const C={VCP:[-22.9,-47.1,'Campinas / SP','r',0,1,0,'Campinas+SP'],LIS:[38.7,-9.1,'Lisboa','r',0,1,0,'Lisboa+Portugal'],DUB:[53.35,-6.26,'Dublin','r',0,1,0,'Dublin+Ireland'],BUD:[47.5,19.04,'Budapeste','r',0,1,0,'Budapest+Hungary'],VIE:[48.2,16.37,'Viena','l',0,1,0,'Wien+Austria'],VCE:[45.44,12.32,'Veneza','r',0,1,0,'Venezia+Italy'],BGY:[45.67,9.7,'Bérgamo','l',0,0,0,'Bergamo+Italy'],MAD:[40.47,-3.56,'Madrid','r',0,0,0,'Madrid+Barajas+Airport']};
+const L=[['VCP','LIS'],['LIS','DUB'],['DUB','BUD'],['BUD','DUB'],['DUB','BGY'],['BGY','VCE'],['VCE','MAD'],['BUD','VIE'],['MAD','VCP']];
 const GROUND=[5,7],CN=[['PORTUGAL',-7.6,41.4],['IRLANDA',-8.4,52.2],['HUNGRIA',20.2,46.9],['ÁUSTRIA',14,47.6],['ITÁLIA',11.8,42.8],['BRASIL',-52,-14]];
-const FIRST={VCP:3,LIS:4,DUB:8,BUD:12,VIE:14,VCE:22,BGY:22};
+const FIRST={VCP:3,LIS:4,DUB:8,BUD:12,VIE:14,VCE:22,BGY:22,MAD:23};
 /* ---------- mapa plano ---------- */
 function MapView(box,onpin){
 const cv=box.querySelector('canvas'),x=cv.getContext('2d'),CAP=84;
@@ -412,43 +474,102 @@ $('#th').onclick=()=>{const dark=root.dataset.theme==='dark'||(!root.dataset.the
 /* abas */
 function tab(v){document.querySelectorAll('.view').forEach(s=>s.hidden=s.dataset.v!==v);document.querySelectorAll('.tb button').forEach(b=>b.classList.toggle('on',b.dataset.t===v));scrollTo(0,0);if(v==='roteiro')center(true)}
 document.querySelectorAll('.tb button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
-const toDay=d=>{tab('roteiro');show(d);$('#sc').scrollIntoView({behavior:'smooth',block:'start'})};
+const toDay=d=>{tab('roteiro');show(d)};
 /* ---------- início ---------- */
 const nw=new Date(),df=Math.round((new Date(2026,10,3)-new Date(nw.getFullYear(),nw.getMonth(),nw.getDate()))/864e5),inTrip=df<=0&&df>=-21,td=3-df,after=df<-21,ref=inTrip?td:3;
 const wk=d=>new Date(2026,10,d).toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','');
 const subTxt=df>0?'Faltam '+df+(df===1?' dia':' dias'):inTrip?'Dia '+(1-df)+' de 22':'Viagem concluída';
 document.querySelectorAll('.sub').forEach(e=>e.textContent=subTxt);
-/* ---------- dias ---------- */
-const sc=$('#sc'),grps=[];D.forEach(r=>{const g=grps[grps.length-1];g&&g.b===r[7]&&g.cc===r[10][r[10].length-1]?g.days.push(r):grps.push({b:r[7],cc:r[10][r[10].length-1],days:[r]})});
+/* ---------- dias e guia por país ---------- */
+const sc=$('#sc'),guide=$('#guide'),grps=[];
+D.forEach(r=>{const g=grps[grps.length-1];g&&g.b===r[7]&&g.cc===r[10][r[10].length-1]?g.days.push(r):grps.push({b:r[7],cc:r[10][r[10].length-1],days:[r]})});
 const GN={VCP:'Brasil',LIS:'Lisboa',DUB:'Dublin',BUD:'Budapeste',VCE:'Veneza'};
 sc.innerHTML=grps.map(g=>'<div class="g"><div class="gl">'+(g.days.length>1?'<span class="fl">'+flag(g.cc)+'</span>'+GN[g.b]:'')+'</div><div class="cells">'+g.days.map(r=>{const d=r[0];return '<button class="dy'+(r[6]!==-1?' ev':'')+(after||(inTrip&&d<td)?' past':'')+(inTrip&&d===td?' today':'')+'" data-d="'+d+'" aria-pressed="false" aria-label="Dia '+d+', '+r[1]+'"><small>'+wk(d)+'</small><b>'+d+'</b><span class="bt"><i class="dt"></i></span></button>'}).join('')+'</div></div>').join('');
 sc.addEventListener('click',e=>{const b=e.target.closest('.dy');if(b)show(+b.dataset.d)});
 sc.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();show(sel+(e.key==='ArrowRight'?1:-1));sc.querySelector('.dy.on').focus()}});
-const SEG=[[3,'Saída · Campinas'],[4,'Lisboa'],[8,'Dublin'],[11,'Budapeste'],[17,'Dublin (volta)'],[22,'Veneza'],[24,'Volta ao Brasil']];
-$('#go').innerHTML=SEG.map(s=>'<option value="'+s[0]+'">'+s[1]+'</option>').join('');
-$('#go').onchange=e=>show(+e.target.value);
 function center(snap){const b=sc.querySelector('.dy.on');if(b&&sc.clientWidth)sc.scrollTo({left:b.offsetLeft-sc.clientWidth/2+b.offsetWidth/2,behavior:snap||RM?'auto':'smooth'})}
 function ends(r){if(r[6]===-1)return[r[5]];const s=new Set();[].concat(r[6]).forEach(i=>{s.add(L[i][0]);s.add(L[i][1])});return[...s]}
+
+/* ícones dos compromissos */
+const IC=p=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
+const ICON={voo:IC('<path d="M21 3L3 11l7 2 2 8z"/><path d="M10 13l11-10"/>'),bus:IC('<rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/>'),trem:IC('<rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l2-4M16 21l-2-4"/>'),jogo:IC('<circle cx="12" cy="12" r="9"/><path d="M12 8l3.500 2.500-1.300 4h-4.400l-1.300-4zM12 3v5M20 9.500l-4.500 1M17.500 19l-3.300-4.500M6.500 19l3.300-4.500M4 9.500l4.500 1"/>')};
+
+/* conteúdo de cada dia.  e: compromissos [tipo, hora, texto, planejado?]  p: lugares (texto ou [nome, busca no mapa, 'p' planejado | 'o' opcional])  n: observação  free: dia livre */
+const FREE='Passeios e experiências em família, com programação flexível.';
+const GD={
+3:{t:'Saída do Brasil',e:[['voo','21h05','Campinas → Lisboa · Azul 8752']],p:[]},
+4:{t:'Belém e Costa da Caparica',e:[['voo','10h10','Chegada a Lisboa']],p:[['Mosteiro dos Jerónimos','Mosteiro dos Jeronimos Lisboa'],['Padrão dos Descobrimentos','Padrao dos Descobrimentos Lisboa'],['Torre de Belém','Torre de Belem Lisboa'],['Costa da Caparica ao entardecer','Costa da Caparica Portugal']]},
+5:{t:'Lisboa histórica e Benfica',e:[['jogo','20h','Benfica x Lech Poznań · Estádio da Luz']],p:[['Praça do Comércio e Rua Augusta','Praca do Comercio Lisboa'],['Rossio e Chiado','Chiado Lisboa'],['Alfama, Sé de Lisboa e miradouros','Se de Lisboa']]},
+6:{t:'Cascais e Cabo da Roca',p:[['Centro histórico e Baía de Cascais','Cascais Portugal'],['Boca do Inferno','Boca do Inferno Cascais'],['Praia do Guincho','Praia do Guincho Cascais'],['Cabo da Roca','Cabo da Roca Portugal']]},
+7:{t:'Costa da Caparica',e:[['voo','20h30','Lisboa → Dublin · Ryanair · chegada às 23h20']],p:['Manhã livre para aproveitar a região','Passeio tranquilo e preparação para a viagem a Dublin']},
+8:{t:'Dublin',free:1},9:{t:'Dublin',free:1},10:{t:'Dublin',free:1},
+11:{t:'Chegada a Budapeste',e:[['voo','10h35','Dublin → Budapeste · Ryanair FR1023 · chegada às 14h30']],p:['Chegada e acomodação','Passeio pelo centro',['Danúbio à noite','Danubio Budapeste']]},
+12:{t:'Buda histórica',p:[['Castelo de Buda','Castelo de Buda Budapeste'],['Bastião dos Pescadores','Bastiao dos Pescadores Budapeste'],['Ponte das Correntes','Ponte das Correntes Budapeste']]},
+13:{t:'Szentendre e Natal',p:[['Szentendre','Szentendre Hungria','o'],['Mercados de Natal de Budapeste','Vorosmarty ter Budapeste','p']],n:'Mercados de Natal: abertura prevista a partir de 13/11, segundo guias de turismo. Conferir antes de ir.'},
+14:{t:'Bate-volta a Viena',e:[['trem','','Trem Budapeste ⇄ Viena · horários a definir',1]],p:[['Centro histórico de Viena','Centro historico de Viena'],['Rathaus e região central','Rathaus Viena'],['Palácio de Schönbrunn','Palacio de Schonbrunn Viena'],['Mercados de Natal','Rathausplatz Viena','p']],n:'Viagem em planejamento, sem reserva confirmada. Mercados de Natal de Viena: abertura prevista entre 6 e 13/11, segundo guias de turismo. Conferir antes de ir.'},
+15:{t:'Pest e Danúbio',p:[['Parlamento Húngaro','Parlamento Hungaro Budapeste'],'Passeio pelo centro de Pest',['Mercados de Natal','Vorosmarty ter Budapeste','p'],['Cruzeiro pelo Danúbio','Cruzeiro Danubio Budapeste','p']]},
+16:{t:'Despedida de Budapeste',e:[['voo','22h00','Budapeste → Dublin · Ryanair FR1200 · chegada às 00h10']],p:['Programação ajustada ao horário do voo'],n:'Saída do apartamento até as 10h.'},
+17:{t:'Dublin',e:[['voo','00h10','Chegada a Dublin']],free:1},18:{t:'Dublin',free:1},19:{t:'Dublin',free:1},20:{t:'Dublin',free:1},21:{t:'Dublin',free:1},
+22:{t:'Chegada a Veneza',e:[['voo','07h20','Dublin → Bérgamo · Ryanair FR6126 · chegada às 10h50'],['bus','13h55','Bérgamo → Veneza Tronchetto · FlixBus · chegada às 17h10']],p:['Chegada e acomodação',['Passeio pelo Grande Canal','Grande Canal Veneza'],'Caminhada pelas ruas e pontes de Veneza','Noite livre']},
+23:{t:'Despedida da Europa',e:[['voo','18h40','Veneza → Madrid · Air Europa UX1084 · chegada às 21h25'],['voo','23h55','Madrid → São Paulo · Air Europa UX057 · chegada às 06h30 (+1)']],p:['Passeio tranquilo por Veneza','Tempo livre para aproveitar a cidade','Retorno ao Brasil'],n:'Escala em Madrid de 2h30. O check-in online abre 48 h antes do voo, em 21/11 às 18h40.'},
+24:{t:'Chegada ao Brasil',e:[['voo','06h30','Chegada a São Paulo · Guarulhos']],p:['Fim da Eurotrip 2026']}};
+const SECS=[{cc:'BR',n:'Saída do Brasil',d:[3]},{cc:'PT',n:'Portugal',r:'04 a 07 nov',c:'Lisboa · Costa da Caparica',d:[4,5,6,7]},{cc:'IE',n:'Irlanda',r:'07 a 11 nov',c:'Dublin',d:[8,9,10]},{cc:'HU',n:'Hungria',r:'11 a 16 nov',c:'Budapeste · Viena',d:[11,12,13,14,15,16]},{cc:'IE',n:'Irlanda',r:'16 a 21 nov',c:'Dublin',d:[17,18,19,20,21]},{cc:'IT',n:'Itália',r:'22 e 23 nov',c:'Veneza',d:[22,23]},{cc:'BR',n:'Volta ao Brasil',d:[24]}];
+const secOf={};SECS.forEach((s,i)=>s.d.forEach(d=>secOf[d]=i));
+$('#cn').innerHTML=[['PT','Portugal'],['IE','Irlanda'],['HU','Hungria'],['IT','Itália']].map(c=>'<button data-cc="'+c[0]+'" aria-label="Ir para '+c[1]+'"><span class="fl">'+flag(c[0])+'</span>'+c[1]+'</button>').join('');
+$('#cn').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=SECS.findIndex(s=>s.cc===b.dataset.cc);show(SECS[i].d[0],false,$('#sec-'+i))});
+
+/* estado do que o Igor marca e escreve (fica no aparelho) */
+const rd=k=>{try{const v=JSON.parse(localStorage.getItem(k)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return{}}},sv=(k,o)=>{try{localStorage.setItem(k,JSON.stringify(o))}catch(e){}};
+const VIS=rd('eurotrip-visit'),NOTES=rd('eurotrip-notes'),eh=q=>String(q).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),nid=()=>Math.random().toString(36).slice(2,9);
+const plOf=d=>(GD[d].p||[]).map(x=>typeof x==='string'?{t:x}:{t:x[0],q:x[1],f:x[2]});
+const mineHTML=d=>(NOTES[d]||[]).map(n=>'<div class="pl'+(n.done?' v':'')+'"><button class="mk" data-n="'+n.id+'" aria-label="Marcar como feito"><i></i></button><span class="tx">'+eh(n.t)+'</span><button class="x" data-xn="'+n.id+'" aria-label="Remover">×</button></div>').join('');
+function counts(d){const pl=plOf(d),notes=NOTES[d]||[],total=(GD[d].free?0:pl.filter(p=>!/^(Chegada e acomodação|Noite livre|Retorno ao Brasil|Fim da Eurotrip 2026|Programação ajustada)/.test(p.t)).length)+notes.length;let done=notes.filter(n=>n.done).length;pl.forEach((p,i)=>{if(VIS[d]&&VIS[d][i])done++});return[done,total]}
+function cnt(d){const c=$('#dd-'+d+' .cnt'),[a,b]=counts(d);if(c)c.textContent=a?a+'/'+b:''}
+function cardHTML(r){
+ const d=r[0],g=GD[d],pl=plOf(d),ev=g.e||[],e0=ev[0],stay=r[9]!=null?ST[r[9]]:null;
+ const sum=g.free?FREE:pl.length?pl.map(p=>p.t).join(' · '):ev.map(x=>x[2]).join(' · ');
+ const mp=[3,23,24].includes(d)?'':'<a class="btn w2" target="_blank" rel="noopener noreferrer" href="'+M(C[r[5]][7])+'">Abrir a região no Google Maps ↗</a>';
+ return '<article class="dd" id="dd-'+d+'" data-d="'+d+'"><button class="dh" aria-expanded="false" aria-controls="db-'+d+'"><span class="dn"><small>'+wk(d)+'</small><b>'+String(d).padStart(2,'0')+'</b></span><span class="dm"><b>'+g.t+'</b><span>'+eh(sum)+'</span></span><span class="dr">'+(e0?'<span class="eb">'+ICON[e0[0]]+(e0[1]?e0[1]:'')+'</span>':'')+'<span class="cnt"></span><i class="chev"></i></span></button>'
+ +'<div class="bd" id="db-'+d+'"><div><div class="bi"><div class="mslot"></div>'
+ +(ev.length?'<div class="evs">'+ev.map(x=>'<div class="ev'+(x[3]?' pn':'')+'">'+ICON[x[0]]+(x[1]?'<time>'+x[1]+'</time>':'')+'<span>'+eh(x[2])+'</span></div>').join('')+'</div>':'')
+ +'<div class="pls"><div class="pp">'+(g.free?'<p class="fm">'+FREE+'</p>':pl.map((p,i)=>'<div class="pl'+(p.f?' p':'')+(VIS[d]&&VIS[d][i]?' v':'')+'"><button class="mk" data-i="'+i+'" aria-label="Marcar como visitado"><i></i></button><span class="tx">'+eh(p.t)+(p.f==='o'?'<small>opcional</small>':p.f==='p'?'<small>previsto</small>':'')+'</span>'+(p.q?'<a class="go" target="_blank" rel="noopener noreferrer" href="'+M(encodeURIComponent(p.q))+'" aria-label="Abrir '+eh(p.t)+' no mapa">'+IC('<path d="M7 17L17 7M9 7h8v8"/>')+'</a>':'')+'</div>').join(''))+'</div><div class="mine">'+mineHTML(d)+'</div></div>'
+ +(g.n?'<p class="nt">'+g.n+'</p>':'')
+ +'<form class="addi addn" data-d="'+d+'"><input id="nn-'+d+'" placeholder="Adicionar passeio ou nota" autocomplete="off" maxlength="80" aria-label="Adicionar passeio ou anotação ao dia '+d+'"><button class="btn" type="submit" aria-label="Adicionar">+</button></form>'
+ +(stay?'<details class="acc"><summary><div><span class="mono">Dorme em</span><b>'+r[8]+'</b></div></summary><div class="in"><span>'+stay[3]+'</span><span>'+stay[4]+'</span><div class="lk">'+stay[5].map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+' ↗</a>').join('')+'</div></div></details>':r[8]?'<div class="tile"><span class="mono">Dorme em</span><b>'+r[8]+'</b></div>':'')
+ +'<div class="act"><button class="btn" data-go="'+(d-1)+'"'+(d===3?' disabled':'')+'>← Anterior</button><button class="btn pri" data-go="'+(d+1)+'"'+(d===24?' disabled':'')+'>Próximo →</button>'+mp+(inTrip&&d!==td?'<button class="btn w2" data-go="'+td+'">Ir para hoje</button>':'')+'</div>'
+ +'</div></div></div></article>'}
+guide.innerHTML=SECS.map((s,i)=>'<div class="cs" id="sec-'+i+'"><span class="fl">'+flag(s.cc)+'</span><div><b>'+s.n+'</b>'+(s.c?'<span class="ct">'+s.c+'</span>':'')+'</div>'+(s.r?'<span class="mono">'+s.r+'</span>':'')+'</div>'+s.d.map(d=>cardHTML(D.find(q=>q[0]===d))).join('')).join('');
+D.forEach(r=>cnt(r[0]));
+
+/* interações do guia */
+guide.addEventListener('click',e=>{
+ const h=e.target.closest('.dh');
+ if(h){const c=h.parentNode;if(c.classList.contains('open')){c.classList.remove('open');h.setAttribute('aria-expanded','false')}else show(+c.dataset.d,false,c);return}
+ const go=e.target.closest('[data-go]');if(go){show(+go.dataset.go);return}
+ const m=e.target.closest('.mk');
+ if(m){const c=m.closest('.dd'),d=+c.dataset.d,li=m.closest('.pl');
+  if(m.dataset.n){const n=NOTES[d].find(q=>q.id===m.dataset.n);n.done=!n.done;li.classList.toggle('v',n.done);sv('eurotrip-notes',NOTES)}
+  else{VIS[d]=VIS[d]||{};VIS[d][m.dataset.i]=!VIS[d][m.dataset.i];li.classList.toggle('v',!!VIS[d][m.dataset.i]);sv('eurotrip-visit',VIS)}
+  cnt(d);return}
+ const x=e.target.closest('.x');
+ if(x){const c=x.closest('.dd'),d=+c.dataset.d;NOTES[d]=(NOTES[d]||[]).filter(q=>q.id!==x.dataset.xn);sv('eurotrip-notes',NOTES);c.querySelector('.mine').innerHTML=mineHTML(d);cnt(d)}});
+guide.addEventListener('submit',e=>{e.preventDefault();const f=e.target.closest('.addn');if(!f)return;const i=f.querySelector('input'),v=i.value.trim(),d=+f.dataset.d;if(!v)return;
+ (NOTES[d]=NOTES[d]||[]).push({id:nid(),t:v,done:false});sv('eurotrip-notes',NOTES);i.value='';f.closest('.dd').querySelector('.mine').innerHTML=mineHTML(d);cnt(d);i.focus()});
+
 let sel=0;
-function show(d,first){
-d=cl(d,3,24);const dir=d>sel?1:-1;sel=d;const r=D.find(q=>q[0]===d);
-sc.querySelectorAll('.dy').forEach(b=>{const on=+b.dataset.d===d;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.querySelector('.bt').innerHTML=on?flags(r[10].slice(-1)):'<i class="dt"></i>'});
-center(first);
-$('#go').value=SEG.filter(s=>s[0]<=d).pop()[0];
-const mp=[3,23,24].includes(d)?'':'<a class="btn w2" target="_blank" rel="noopener noreferrer" href="'+M(C[r[5]][7])+'">Abrir no Google Maps ↗</a>',stay=r[9]!=null?ST[r[9]]:null;
-$('#dc').innerHTML='<div class="top">'+flags(r[10])+'<span class="mono tag">'+r[2]+'</span></div>'
-+'<div class="mono">'+wk(d)+' · '+String(d).padStart(2,'0')+' nov 2026 · dia '+(d-2)+' de 22</div><h2>'+r[1]+'</h2><p>'+r[3]+'</p>'
-+'<div class="tiles">'+r[4].map(c=>'<div class="tile"><span class="mono">'+c[0]+'</span><b>'+c[1]+'</b></div>').join('')+'</div>'
-+(stay?'<details class="acc"><summary><div><span class="mono">Dorme em</span><b>'+r[8]+'</b></div></summary><div class="in"><span>'+stay[3]+'</span><span>'+stay[4]+'</span><div class="lk">'+stay[5].map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+' ↗</a>').join('')+'</div></div></details>':r[8]?'<div class="tile"><span class="mono">Dorme em</span><b>'+r[8]+'</b></div>':'')
-+'<div class="act"><button class="btn" data-go="'+(d-1)+'"'+(d===3?' disabled':'')+'>← Anterior</button><button class="btn pri" data-go="'+(d+1)+'"'+(d===24?' disabled':'')+'>Próximo →</button>'+mp+(inTrip&&d!==td?'<button class="btn w2" data-go="'+td+'">Ir para hoje</button>':'')+'</div>';
-if(!first&&!RM)$('#dc').animate([{opacity:.2,transform:'translateX('+dir*14+'px)'},{opacity:1,transform:'none'}],{duration:240,easing:'ease-out'});
-const ls=r[6]===-1?[]:[].concat(r[6]);
-$('#mcl').textContent=r[6]===-1?'Você está em':r[2];
-$('#mct').textContent=r[6]===-1?C[r[5]][2]:d===14?'BUD ⇄ VIE':ls.map(i=>L[i][0]+' → '+L[i][1]).join('  ·  ');
-G.go(ends(r),ends(r),ls)}
-$('#dc').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)show(+b.dataset.go)});
-let sx=0,sy=0;const dc=$('#dc');dc.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
-dc.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>70&&Math.abs(dy)<40)show(sel+(dx<0?1:-1))},{passive:true});
+function show(d,first,target){
+ d=cl(d,3,24);sel=d;const r=D.find(q=>q[0]===d),card=$('#dd-'+d);
+ sc.querySelectorAll('.dy').forEach(b=>{const on=+b.dataset.d===d;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.querySelector('.bt').innerHTML=on?flags(r[10].slice(-1)):'<i class="dt"></i>'});
+ center(first);
+ const si=secOf[d];document.querySelectorAll('#cn button').forEach(b=>b.classList.toggle('on',SECS[si].cc===b.dataset.cc));
+ $('#rs').textContent='Dia '+(d-2)+' de 22';
+ guide.querySelectorAll('.dd').forEach(c=>{const on=c===card;c.classList.toggle('open',on);c.querySelector('.dh').setAttribute('aria-expanded',on)});
+ card.querySelector('.mslot').appendChild($('.mapw'));
+ const ls=r[6]===-1?[]:[].concat(r[6]);
+ $('#mcl').textContent=r[6]===-1?'Você está em':r[2];
+ $('#mct').textContent=r[6]===-1?C[r[5]][2]:d===14?'BUD ⇄ VIE':d===23?'VCE → MAD → GRU':ls.map(i=>L[i][0]+' → '+L[i][1]).join('  ·  ');
+ G.go(ends(r),ends(r),ls);
+ if(!first)setTimeout(()=>(target||card).scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}),RM?0:340)}
 show(inTrip?td:4,true);
 /* ---------- voos ---------- */
 const ar='<svg class="ar" viewBox="0 0 34 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 5h32M27 1l5 4-5 4"/></svg>';
@@ -466,7 +587,7 @@ $('#cvs').textContent='03 → 24 nov 2026';$('#cvf').innerHTML=['PT','IE','HU','
 (function(){const t=TR.find(q=>nw<=endOf(q));if(!t){$('#nxt').innerHTML='<div class="empty">Viagem concluída. Obrigado por acompanhar a Eurotrip.</div>';return}
 const st=stOf(t),dd=Math.round((new Date(2026,10,t[9])-new Date(nw.getFullYear(),nw.getMonth(),nw.getDate()))/864e5),when=st==='now'||dd<=0?'Hoje':dd===1?'Amanhã':'Em '+dd+' dias',kind=['Voo','Ônibus','Trem'][t[10]||0];
 $('#nxt').innerHTML='<button class="pass nxt'+(st==='now'?' now':'')+'" data-day="'+t[9]+'"><div class="hd"><span class="mono">Próxima atividade · '+kind+'</span><span class="mono tagn">'+when+'</span></div><div class="pr">'+pt(t[1],t[3])+ar+pt(t[2],t[4],1)+'</div><div class="cr">'+wk(t[9])+' '+t[0].split(' ')[0]+' nov · '+(t[5]?'saída '+t[5]:'horário a definir')+' · '+t[8]+'</div></button>';
-$('#nxt .pass').onclick=()=>{show(t[9]);$('#sc').scrollIntoView({behavior:'smooth',block:'start'})}})();
+$('#nxt .pass').onclick=()=>show(t[9])})();
 /* ---------- estadias ---------- */
 $('#stays').innerHTML=ST.map((s,i)=>'<details class="acc"'+(i===0?' open':'')+'><summary><div style="gap:8px"><span class="fl">'+flag(s[0])+'</span><h3>'+s[2]+'</h3><span class="mono">'+s[3]+'</span></div></summary><div class="in"><p>'+s[4]+'</p><div class="lk">'+s[5].map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+' ↗</a>').join('')+'<button data-day="'+s[6]+'">Ver no roteiro</button></div></div></details>').join('');
 document.querySelectorAll('.stays [data-day]').forEach(b=>b.onclick=()=>toDay(+b.dataset.day));
