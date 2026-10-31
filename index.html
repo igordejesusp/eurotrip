@@ -181,6 +181,9 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .addn{padding-top:12px;border-top:1px solid var(--line)}
 
 /* voos */
+.docs{display:flex;flex-direction:column;gap:10px;margin-top:22px}.docs .cs{padding:0}.docs .ct{display:block;font-size:12px;color:var(--mute);margin-top:2px}.dadd{align-self:flex-start}
+.dr{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px 6px 6px 16px}.dr button.o{flex:1;text-align:left;font-size:14px;font-weight:500;background:none;border:0;min-height:40px;cursor:pointer;color:inherit;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dr .x{width:40px;height:40px}
+.dv{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column}.dv[hidden]{display:none}.dh{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px}.dh b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dh div{display:flex;gap:8px;flex:none}.dv iframe{flex:1;width:100%;border:0;background:#fff}
 .passes{display:flex;flex-direction:column;gap:10px}
 .pass{display:flex;flex-direction:column;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;cursor:pointer;width:100%}
 .pass:active{transform:scale(.99)}
@@ -314,6 +317,8 @@ el.addEventListener('click',end);setTimeout(end,6000*slow);
 <section class="view" id="v-voos" data-v="voos" hidden>
   <div class="sh"><div><span class="mono sub"></span><h1>Voos</h1></div></div>
   <div class="passes" id="passes"></div>
+  <div class="docs"><div class="cs"><div><b>Documentos de embarque</b><span class="ct">Ficam só neste aparelho e abrem sem internet.</span></div></div><div id="dl"></div><label class="btn dadd"><input type="file" id="df" accept="application/pdf,image/*" hidden>Anexar documento</label></div>
+  <div class="dv" id="dv" hidden><div class="dh"><b id="dvn"></b><div><a id="dvo" target="_blank" rel="noopener" class="btn">Abrir</a><button class="btn" id="dvc">Fechar</button></div></div><iframe id="dvf" title="Documento"></iframe></div>
 </section>
 
 <section class="view" id="v-estadias" data-v="estadias" hidden>
@@ -390,7 +395,7 @@ const D=[
 [11,'Dublin → Budapeste','Voo','Ryanair FR1023: partida às 10h35 e chegada a Budapeste às 14h30.',[['Saída','10h35'],['Chegada','14h30'],['Voo','FR1023']],'BUD',2,'BUD','Rose Apartment',2,['IE','HU']],
 [12,'Budapeste','Dia livre','Dia livre para conhecer Budapeste. Passeios a definir.',[['Passeios','A definir']],'BUD',-1,'BUD','Rose Apartment',2,['HU']],
 [13,'Budapeste','Dia livre','Mais um dia na capital húngara. Passeios a definir.',[['Passeios','A definir']],'BUD',-1,'BUD','Rose Apartment',2,['HU']],
-[14,'Budapeste ⇄ Viena','Trem · ida e volta','Dia de bate-volta de trem de Budapeste a Viena, na Áustria, voltando para dormir em Budapeste. Bilhetes e horários ainda a definir.',[['Transporte','Trem'],['Trecho','BUD ⇄ VIE'],['Horários','A definir']],'VIE',7,'BUD','Rose Apartment',2,['HU','AT']],
+[14,'Budapeste ⇄ Viena','Trem · ida e volta','Dia de bate-volta de trem de Budapeste a Viena, na Áustria, voltando para dormir em Budapeste. Ida às 07h58 e volta às 21h40.',[['Transporte','Trem'],['Ida','07h58'],['Volta','21h40']],'VIE',7,'BUD','Rose Apartment',2,['HU','AT']],
 [15,'Budapeste','Dia livre','Dia livre em Budapeste. Passeios a definir.',[['Passeios','A definir']],'BUD',-1,'BUD','Rose Apartment',2,['HU']],
 [16,'Budapeste → Dublin','Voo','Último dia em Budapeste. Voo Ryanair FR1200 às 22h00, chegada a Dublin às 00h10 do dia 17.',[['Saída','22h00'],['Chegada','00h10 (+1)'],['Voo','FR1200']],'BUD',3,'BUD','A caminho de Dublin',null,['HU','IE']],
 [17,'Dublin','Chegada','Chegada à Irlanda às 00h10. Início da segunda estadia em Dublin.',[['Chegada','00h10']],'DUB',-1,'DUB','Dublin',1,['IE']],
@@ -405,7 +410,7 @@ const D=[
 const TR=[['03 → 04 nov','VCP','LIS','Campinas','Lisboa','21h05','10h10','+1','Azul · voo 8752',3],
 ['07 nov','LIS','DUB','Lisboa','Dublin','20h30','23h20','','Ryanair',7],
 ['11 nov','DUB','BUD','Dublin','Budapeste','10h35','14h30','','Ryanair · FR1023',11],
-['14 nov','BUD','VIE','Budapeste','Viena','','','','Trem · ida e volta no mesmo dia',14,2],
+['14 nov','BUD','VIE','Budapeste','Viena','07h58','21h40','','Trem · ida e volta no mesmo dia',14,2,['Ida','Volta']],
 ['16 → 17 nov','BUD','DUB','Budapeste','Dublin','22h00','00h10','+1','Ryanair · FR1200',16],
 ['22 nov','DUB','BGY','Dublin','Bérgamo','07h20','10h50','','Ryanair · FR6126',22],
 ['22 nov','BGY','VCE','Bérgamo','Veneza Tronchetto','13h55','17h10','','FlixBus · rota 405',22,1],
@@ -506,7 +511,7 @@ const GD={
 11:{t:'Chegada a Budapeste',e:[['voo','10h35','Dublin → Budapeste · Ryanair FR1023 · chegada às 14h30']],p:['Chegada e acomodação','Passeio pelo centro',['Danúbio à noite','Danubio Budapeste']]},
 12:{t:'Buda histórica',p:[['Castelo de Buda','Castelo de Buda Budapeste'],['Bastião dos Pescadores','Bastiao dos Pescadores Budapeste'],['Ponte das Correntes','Ponte das Correntes Budapeste']]},
 13:{t:'Szentendre e Natal',p:[['Szentendre','Szentendre Hungria','o'],['Mercados de Natal de Budapeste','Vorosmarty ter Budapeste','p']],n:'Mercados de Natal: abertura prevista a partir de 13/11, segundo guias de turismo. Conferir antes de ir.'},
-14:{t:'Bate-volta a Viena',e:[['trem','','Trem Budapeste ⇄ Viena · horários a definir',1]],p:[['Centro histórico de Viena','Centro historico de Viena'],['Rathaus e região central','Rathaus Viena'],['Palácio de Schönbrunn','Palacio de Schonbrunn Viena'],['Mercados de Natal','Rathausplatz Viena','p']],n:'Viagem em planejamento, sem reserva confirmada. Mercados de Natal de Viena: abertura prevista entre 6 e 13/11, segundo guias de turismo. Conferir antes de ir.'},
+14:{t:'Bate-volta a Viena',e:[['trem','07h58','Trem Budapeste → Viena · ida'],['trem','21h40','Trem Viena → Budapeste · volta']],p:[['Centro histórico de Viena','Centro historico de Viena'],['Rathaus e região central','Rathaus Viena'],['Palácio de Schönbrunn','Palacio de Schonbrunn Viena'],['Mercados de Natal','Rathausplatz Viena','p']],n:'Passeios em Viena ainda em planejamento. Mercados de Natal de Viena: abertura prevista entre 6 e 13/11, segundo guias de turismo. Conferir antes de ir.'},
 15:{t:'Pest e Danúbio',p:[['Parlamento Húngaro','Parlamento Hungaro Budapeste'],'Passeio pelo centro de Pest',['Mercados de Natal','Vorosmarty ter Budapeste','p'],['Cruzeiro pelo Danúbio','Cruzeiro Danubio Budapeste','p']]},
 16:{t:'Despedida de Budapeste',e:[['voo','22h00','Budapeste → Dublin · Ryanair FR1200 · chegada às 00h10']],p:['Programação ajustada ao horário do voo'],n:'Saída do apartamento até as 10h.'},
 17:{t:'Dublin',e:[['voo','00h10','Chegada a Dublin']],free:1},18:{t:'Dublin',free:1},19:{t:'Dublin',free:1},20:{t:'Dublin',free:1},21:{t:'Dublin',free:1},
@@ -580,14 +585,26 @@ const pt=(c,city,r)=>'<div class="pt'+(r?' r':'')+'"><span class="fl">'+flag(CC[
 $('#passes').innerHTML=TR.map(t=>{const st=stOf(t),kind=['Voo','Ônibus','Trem'][t[10]||0];
 if(st==='done')return '<button class="pass done" data-day="'+t[9]+'"><span class="nm">'+flags([CC[t[1]],CC[t[2]]])+'<b>'+t[3]+' → '+t[4]+'</b></span><span class="mono">Encerrado</span></button>';
 return '<button class="pass'+(st==='now'?' now':'')+'" data-day="'+t[9]+'"><div class="hd"><span class="mono">'+t[0]+'</span><span class="mono'+(st==='now'?' tagn':'')+'">'+(st==='now'?'Hoje · ':'')+kind+'</span></div><div class="pr">'+pt(t[1],t[3])+ar+pt(t[2],t[4],1)+'</div>'
-+'<div class="tm">'+(t[5]?'<div><span class="mono">Saída</span><b>'+t[5]+'</b></div><div><span class="mono">Chegada</span><b>'+t[6]+(t[7]?' <em>'+t[7]+'</em>':'')+'</b></div>':'<div><span class="mono">Horários</span><b>A definir</b></div>')+'</div><div class="cr">'+t[8]+'</div></button>'}).join('');
++'<div class="tm">'+(t[5]?'<div><span class="mono">'+(t[11]?t[11][0]:'Saída')+'</span><b>'+t[5]+'</b></div><div><span class="mono">'+(t[11]?t[11][1]:'Chegada')+'</span><b>'+t[6]+(t[7]?' <em>'+t[7]+'</em>':'')+'</b></div>':'<div><span class="mono">Horários</span><b>A definir</b></div>')+'</div><div class="cr">'+t[8]+'</div></button>'}).join('');
 document.querySelectorAll('.pass').forEach(b=>b.onclick=()=>toDay(+b.dataset.day));
 /* capa e próxima atividade */
 $('#cvs').textContent='03 → 24 nov 2026';$('#cvf').innerHTML=['PT','IE','HU','AT','IT'].map(flag).join('');
 (function(){const t=TR.find(q=>nw<=endOf(q));if(!t){$('#nxt').innerHTML='<div class="empty">Viagem concluída. Obrigado por acompanhar a Eurotrip.</div>';return}
 const st=stOf(t),dd=Math.round((new Date(2026,10,t[9])-new Date(nw.getFullYear(),nw.getMonth(),nw.getDate()))/864e5),when=st==='now'||dd<=0?'Hoje':dd===1?'Amanhã':'Em '+dd+' dias',kind=['Voo','Ônibus','Trem'][t[10]||0];
-$('#nxt').innerHTML='<button class="pass nxt'+(st==='now'?' now':'')+'" data-day="'+t[9]+'"><div class="hd"><span class="mono">Próxima atividade · '+kind+'</span><span class="mono tagn">'+when+'</span></div><div class="pr">'+pt(t[1],t[3])+ar+pt(t[2],t[4],1)+'</div><div class="cr">'+wk(t[9])+' '+t[0].split(' ')[0]+' nov · '+(t[5]?'saída '+t[5]:'horário a definir')+' · '+t[8]+'</div></button>';
+$('#nxt').innerHTML='<button class="pass nxt'+(st==='now'?' now':'')+'" data-day="'+t[9]+'"><div class="hd"><span class="mono">Próxima atividade · '+kind+'</span><span class="mono tagn">'+when+'</span></div><div class="pr">'+pt(t[1],t[3])+ar+pt(t[2],t[4],1)+'</div><div class="cr">'+wk(t[9])+' '+t[0].split(' ')[0]+' nov · '+(t[5]?(t[11]?'ida '+t[5]+' · volta '+t[6]:'saída '+t[5]):'horário a definir')+' · '+t[8]+'</div></button>';
 $('#nxt .pass').onclick=()=>show(t[9])})();
+/* ---------- documentos de embarque (IndexedDB, só no aparelho) ---------- */
+(function(){const NM='eurotrip-docs';let db=null,cur=null;
+const op=()=>new Promise((ok,no)=>{try{const r=indexedDB.open(NM,1);r.onupgradeneeded=()=>r.result.createObjectStore('d',{keyPath:'id'});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}});
+const tx=(m,f)=>new Promise((ok,no)=>{const t=db.transaction('d',m),q=f(t.objectStore('d'));t.oncomplete=()=>ok(q&&q.result);t.onerror=()=>no(t.error)});
+const list=()=>$('#dl');
+async function draw(){let a=[];try{a=await tx('readonly',o=>o.getAll())||[]}catch(e){}
+a.sort((x,y)=>x.at-y.at);list().innerHTML=a.map(d=>'<div class="dr"><button class="o" data-id="'+d.id+'">'+esc(d.name)+'</button><button class="x" data-rm="'+d.id+'" aria-label="Remover documento">×</button></div>').join('')}
+async function openDoc(id){const d=await tx('readonly',o=>o.get(id));if(!d)return;if(cur)URL.revokeObjectURL(cur);cur=URL.createObjectURL(d.blob);$('#dvn').textContent=d.name;$('#dvf').src=cur;$('#dvo').href=cur;$('#dv').hidden=false}
+op().then(x=>{db=x;draw()}).catch(()=>{$('.docs').hidden=true});
+$('#df').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f||!db)return;await tx('readwrite',o=>o.put({id:uid(),name:f.name.replace(/\.[^.]+$/,''),blob:f,at:Date.now()}));draw()};
+list().addEventListener('click',async e=>{const o=e.target.closest('.o'),x=e.target.closest('[data-rm]');if(o)openDoc(o.dataset.id);else if(x){if(x.dataset.arm===x.dataset.rm){await tx('readwrite',s=>s.delete(x.dataset.rm));draw()}else{x.dataset.arm=x.dataset.rm;x.textContent='Excluir?';x.style.width='auto';x.style.padding='0 10px'}}});
+$('#dvc').onclick=()=>{$('#dv').hidden=true;$('#dvf').src='about:blank'}})();
 /* ---------- estadias ---------- */
 $('#stays').innerHTML=ST.map((s,i)=>'<details class="acc"'+(i===0?' open':'')+'><summary><div style="gap:8px"><span class="fl">'+flag(s[0])+'</span><h3>'+s[2]+'</h3><span class="mono">'+s[3]+'</span></div></summary><div class="in"><p>'+s[4]+'</p><div class="lk">'+s[5].map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+' ↗</a>').join('')+'<button data-day="'+s[6]+'">Ver no roteiro</button></div></div></details>').join('');
 document.querySelectorAll('.stays [data-day]').forEach(b=>b.onclick=()=>toDay(+b.dataset.day));
